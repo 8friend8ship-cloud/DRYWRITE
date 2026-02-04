@@ -1,0 +1,5 @@
+{
+  "name": "E-Book Studio AI",
+  "description": "An AI-powered tool to automatically format text from Google Docs into a beautifully designed e-book. It intelligently generates a title and a unique cover image based on your content.",
+  "requestFramePermissions": []
+}
