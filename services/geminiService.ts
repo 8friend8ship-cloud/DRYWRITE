@@ -1,13 +1,41 @@
 
 import { GoogleGenAI, Chat, GenerateContentResponse } from "@google/genai";
 
+const API_KEY_STORAGE_KEY = 'drywriter_api_key';
+
+// This is simple obfuscation (Base64), not strong encryption.
+const decodeKey = (encodedKey: string) => atob(encodedKey);
+
 const getAIClient = () => {
-    const apiKey = process.env.API_KEY;
-    if (!apiKey) {
-        throw new Error("API_KEY environment variable is not set");
+    const encodedKey = localStorage.getItem(API_KEY_STORAGE_KEY);
+    if (!encodedKey) {
+        throw new Error("API Key not found. Please set your API Key in the Admin Panel.");
     }
-    return new GoogleGenAI({ apiKey });
+    try {
+        const apiKey = decodeKey(encodedKey);
+        // Create a new instance every time to ensure the latest key is used.
+        return new GoogleGenAI({ apiKey });
+    } catch (error) {
+         throw new Error("Failed to decode API key. Please set it again in the Admin Panel.");
+    }
 };
+
+export async function testApiKey(apiKey: string): Promise<boolean> {
+    if (!apiKey) return false;
+    try {
+        const ai = new GoogleGenAI({ apiKey });
+        // A very lightweight call to test connectivity and authentication
+        await ai.models.generateContent({
+            model: 'gemini-3-flash-preview',
+            contents: 'test',
+        });
+        return true;
+    } catch (error) {
+        console.error("API Key Test Failed:", error);
+        return false;
+    }
+}
+
 
 export async function generateTitle(content: string): Promise<string> {
     const ai = getAIClient();
@@ -26,10 +54,12 @@ export async function generateTitle(content: string): Promise<string> {
             model: 'gemini-3-flash-preview',
             contents: prompt,
         });
-        // FIX: Safely access and trim the response text to avoid errors if it's undefined.
         return (response.text ?? '').trim();
     } catch (error) {
         console.error("Error generating title:", error);
+        if (error instanceof Error) {
+            throw new Error(`Failed to generate title from Gemini API: ${error.message}`);
+        }
         throw new Error("Failed to generate title from Gemini API.");
     }
 }
@@ -70,6 +100,9 @@ ${introText}
 
     } catch (error) {
         console.error("Error generating cover image:", error);
+        if (error instanceof Error) {
+            throw new Error(`Failed to generate cover image from Gemini API: ${error.message}`);
+        }
         throw new Error("Failed to generate cover image from Gemini API.");
     }
 }
@@ -101,6 +134,9 @@ export async function sendMessage(chat: Chat, message: string): Promise<Generate
         return response;
     } catch (error) {
         console.error("Error sending chat message:", error);
+        if (error instanceof Error) {
+            throw new Error(`Failed to get chat response from Gemini API: ${error.message}`);
+        }
         throw new Error("Failed to get chat response from Gemini API.");
     }
 }

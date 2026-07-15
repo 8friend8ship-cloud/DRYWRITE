@@ -12,7 +12,7 @@ const initialArticles: Article[] = [
     id: '1',
     date: '2026-02-05',
     title: "총성의 부검: 100만 유튜버는 어떻게 탄생하는가",
-    coverImageUrl: "https://images.unsplash.com/photo-1599249303258-d5e08c16ea91?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    coverImageUrl: "https://images.unsplash.com/photo-1599249303258-d5e08c16ea91?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%DD",
     rawText: `# 총성의 부검: 100만 유튜버는 어떻게 탄생하는가
 
 **오가닉 마케터** | C | 2026.02.05
@@ -56,7 +56,7 @@ const initialArticles: Article[] = [
     id: '3',
     date: '2026-02-02',
     title: "콘텐츠 설계의 비밀: 사용자를 사로잡는 법",
-    coverImageUrl: "https://images.unsplash.com/photo-1600132806373-16b2d1523a54?q=80&w=1770&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    coverImageUrl: "https://images.unsplash.com/photo-1600132806373-16b2d1523a54?q=80&w=1770&auto=format&fit=crop&ixlib-rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     rawText: `# 콘텐츠 설계의 비밀: 사용자를 사로잡는 법
 
 **콘텐츠 전략가** | C | 2026.02.02
@@ -97,7 +97,6 @@ const parseContent = (rawText: string): ContentBlock[] => {
         return { type: 'p', content: trimmedBlock };
       });
 }
-
 
 const App: React.FC = () => {
   const [view, setView] = useState<'home' | 'article' | 'admin'>('home');
