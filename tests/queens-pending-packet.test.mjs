@@ -47,7 +47,7 @@ test('packet has the required lineage and evidence fields', () => {
 
 test('every source is real, dated, deduplicated, and blocked before ABIDE mapping', () => {
   assert.ok(Array.isArray(packet.SOURCES));
-  assert.ok(packet.SOURCES.length >= 3, 'at least three source records are required');
+  assert.ok(packet.SOURCES.length >= 5, 'at least five source records are required');
 
   const ids = new Set();
   const urls = new Set();
@@ -72,10 +72,12 @@ test('every source is real, dated, deduplicated, and blocked before ABIDE mappin
   }
 });
 
-test('holdout and production gates prevent premature template promotion', () => {
+test('holdout uses multiple institutions and prevents premature promotion', () => {
   assert.equal(packet.HOLDOUT_RULE.OFFICIAL_TEMPLATE_ALLOWED, false);
   assert.equal(packet.HOLDOUT_RULE.FRONT_READY_ALLOWED, false);
-  assert.ok(packet.HOLDOUT_RULE.CURRENT_INDEPENDENT_SOURCES >= 3);
+  assert.ok(packet.HOLDOUT_RULE.CURRENT_SOURCE_COUNT >= 5);
+  assert.ok(packet.HOLDOUT_RULE.CURRENT_INSTITUTION_COUNT >= 3);
+  assert.ok(new Set(packet.SOURCES.map((source) => source.PUBLISHER)).size >= 3);
   assert.equal(packet.NEXT_REQUIRED_TRANSITION.STEP, 'ABIDE_Code_Map');
   assert.ok(packet.NEXT_REQUIRED_TRANSITION.REQUIREMENTS.includes('ABIDE_ID 확정'));
   assert.ok(packet.NEXT_REQUIRED_TRANSITION.REQUIREMENTS.some((item) => item.includes('중복')));
