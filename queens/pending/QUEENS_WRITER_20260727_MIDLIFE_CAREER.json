@@ -1,0 +1,108 @@
+{
+  "PACKET_ID": "QUEENS_PACKET_20260727_0138_KST_MIDLIFE_CAREER",
+  "SCHEMA_VERSION": "1.0.0",
+  "CREATED_AT": "2026-07-27T01:38:06+09:00",
+  "RETRIEVAL_TIME": "2026-07-27T01:38:06+09:00",
+  "REGION": "KR",
+  "LANGUAGE": "ko-KR",
+  "TARGET_PROJECT": "P02_WRITER",
+  "TARGET_PIPELINE": "Queens_Source→ABIDE_Code_Map→DB_Map_News→DryWriter_Auto_Input→R16→QA→03_Public_Output→Drive→Front",
+  "TOPIC_KEY": "MIDLIFE_CAREER_TRANSITION_UNCERTAINTY",
+  "EVIDENCE_CLASS": "VERIFIED_MARKET",
+  "PRODUCTION_STATUS": "SOURCE_VERIFIED_PIPELINE_PENDING",
+  "ABIDE_ID": null,
+  "ABIDE_STATUS": "REVIEW_REQUIRED",
+  "DEDUPLICATION_SCOPE": "SOURCE_URL+SOURCE_DATE+TOPIC_KEY",
+  "SOURCES": [
+    {
+      "SOURCE_ID": "MOEL_20260209_18942",
+      "SOURCE_URL": "https://www.moel.go.kr/news/enews/report/enewsView.do?news_seq=18942",
+      "SOURCE_DATE": "2026-02-09",
+      "PUBLISHER": "고용노동부",
+      "TITLE": "일경험을 통해 내 일을 찾는 중장년을 응원합니다",
+      "EXTRACTED_EVIDENCE": [
+        "퇴직 후 경력전환을 희망하는 50대 중장년을 대상으로 실제 직무 경험을 제공하는 경력지원제가 시행됐다.",
+        "자격 취득이나 훈련 이수 뒤에도 경력 부족으로 재취업하지 못하는 상황이 정책 필요성으로 제시됐다.",
+        "지원은 전국 23개 민간위탁기관과 고용센터를 통해 운영된다."
+      ],
+      "SAFE_WRITER_ANGLES": [
+        "배운 뒤에도 첫 경력을 요구받는 사람의 막막함",
+        "나이보다 경력 공백이 더 크게 느껴지는 순간",
+        "다시 시작할 때 필요한 것은 거창한 결심보다 첫 일경험이라는 관찰"
+      ],
+      "PROHIBITED_INFERENCES": [
+        "모든 50대가 재취업에 실패한다는 일반화",
+        "정책 참여가 취업을 보장한다는 표현",
+        "출처에 없는 심리·뇌과학·성공률 수치"
+      ],
+      "DEDUPE_KEY": "sha256:MOEL|2026-02-09|18942|MIDLIFE_CAREER_TRANSITION_UNCERTAINTY",
+      "DOWNSTREAM_STATUS": "AWAITING_ABIDE_MAP"
+    },
+    {
+      "SOURCE_ID": "MOEL_20260514_19387",
+      "SOURCE_URL": "https://www.moel.go.kr/news/enews/report/enewsView.do?news_seq=19387",
+      "SOURCE_DATE": "2026-05-14",
+      "PUBLISHER": "고용노동부",
+      "TITLE": "노동자가 선택하고 기업이 지원하도록 중장년 경력지원서비스가 새로워집니다",
+      "EXTRACTED_EVIDENCE": [
+        "50세 이상 퇴직예정자 대상 재취업지원서비스는 2020년부터 일정 규모 이상 기업에 의무화되어 왔다.",
+        "낮은 참여율과 공공고용서비스 연계 부족이 기존 제도의 한계로 지적됐다.",
+        "개편 방향은 노동자의 서비스 선택권 확대, 온라인·주말·야간 접근성 강화, 직업훈련과 일경험 연계다."
+      ],
+      "SAFE_WRITER_ANGLES": [
+        "도움을 받을 수 있어도 퇴직예정자라는 이름 때문에 선뜻 손을 들지 못하는 마음",
+        "정해진 프로그램보다 내가 필요한 도움을 고르는 일이 중요한 이유",
+        "시간과 장소의 제약이 재출발을 막는 현실"
+      ],
+      "PROHIBITED_INFERENCES": [
+        "참여율의 구체적 숫자 추정",
+        "퇴직자의 정서 상태를 임상적으로 단정",
+        "제도 개편이 확정된 취업 결과를 만든다는 표현"
+      ],
+      "DEDUPE_KEY": "sha256:MOEL|2026-05-14|19387|MIDLIFE_CAREER_TRANSITION_UNCERTAINTY",
+      "DOWNSTREAM_STATUS": "AWAITING_ABIDE_MAP"
+    },
+    {
+      "SOURCE_ID": "MOEL_20251217_18748",
+      "SOURCE_URL": "https://www.moel.go.kr/news/enews/report/enewsView.do?news_seq=18748",
+      "SOURCE_DATE": "2025-12-17",
+      "PUBLISHER": "고용노동부",
+      "TITLE": "우리 지역 중장년 인재 발견 - 좋은 일자리 잇고, 함께 성장하고!",
+      "EXTRACTED_EVIDENCE": [
+        "2025년 지역 단위 중장년 고용 네트워크가 15개 고용센터에서 시범 운영됐고 이후 확대 계획이 발표됐다.",
+        "대기업 희망퇴직으로 고용 상황이 악화된 지역에서 퇴직자의 기존 경험을 중소기업 자문 역할과 연결한 사례가 소개됐다.",
+        "개인의 과거 경력을 완전히 버리는 방식이 아니라 다른 산업과 역할로 번역하는 경력전환 사례들이 제시됐다."
+      ],
+      "SAFE_WRITER_ANGLES": [
+        "오래 한 일이 끝났다고 경험까지 사라지는 것은 아니라는 관찰",
+        "경력을 버리는 대신 다른 사람에게 필요한 언어로 바꾸는 과정",
+        "새 직업을 찾는 일과 기존 경험의 쓰임을 다시 발견하는 일의 차이"
+      ],
+      "PROHIBITED_INFERENCES": [
+        "개별 성공사례를 전체 중장년에게 일반화",
+        "특정 직종 전환을 권유하거나 보장",
+        "출처에 없는 소득·취업률·만족도 수치"
+      ],
+      "DEDUPE_KEY": "sha256:MOEL|2025-12-17|18748|MIDLIFE_CAREER_TRANSITION_UNCERTAINTY",
+      "DOWNSTREAM_STATUS": "AWAITING_ABIDE_MAP"
+    }
+  ],
+  "HOLDOUT_RULE": {
+    "MIN_INDEPENDENT_SOURCES": 3,
+    "CURRENT_INDEPENDENT_SOURCES": 3,
+    "SOURCE_DIVERSITY_LIMITATION": "세 자료 모두 고용노동부 계열이므로 기관 다양성 홀드아웃이 추가로 필요하다.",
+    "OFFICIAL_TEMPLATE_ALLOWED": false,
+    "FRONT_READY_ALLOWED": false
+  },
+  "NEXT_REQUIRED_TRANSITION": {
+    "STEP": "ABIDE_Code_Map",
+    "REQUIREMENTS": [
+      "ABIDE_ID 확정",
+      "SOURCE_ID와 ABIDE_ID 동시 기록",
+      "중복 지문 검사",
+      "DryWriter 입력 시 출처에 없는 수치 금지 플래그",
+      "R16 저장 전 근거 없는 정밀수치·임상단정·마크다운 잔여 검사"
+    ]
+  },
+  "NOTES": "Drive/Sheets 커넥터가 이번 실행에서 비활성화되어 canonical Sheet에는 기록하지 않았다. 이 파일은 production database가 아니라 버전 관리되는 pending ingestion packet이며, 실제 생산은 canonical Queens_Source와 ABIDE_Code_Map에 검증 기록이 들어간 뒤에만 인정한다."
+}
