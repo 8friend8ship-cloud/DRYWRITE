@@ -1,8 +1,9 @@
 {
   "PACKET_ID": "QUEENS_PACKET_20260727_0138_KST_MIDLIFE_CAREER",
-  "SCHEMA_VERSION": "1.0.0",
+  "SCHEMA_VERSION": "1.1.0",
   "CREATED_AT": "2026-07-27T01:38:06+09:00",
-  "RETRIEVAL_TIME": "2026-07-27T01:38:06+09:00",
+  "UPDATED_AT": "2026-07-27T03:40:53+09:00",
+  "RETRIEVAL_TIME": "2026-07-27T03:40:53+09:00",
   "REGION": "KR",
   "LANGUAGE": "ko-KR",
   "TARGET_PROJECT": "P02_WRITER",
@@ -85,18 +86,73 @@
       ],
       "DEDUPE_KEY": "sha256:MOEL|2025-12-17|18748|MIDLIFE_CAREER_TRANSITION_UNCERTAINTY",
       "DOWNSTREAM_STATUS": "AWAITING_ABIDE_MAP"
+    },
+    {
+      "SOURCE_ID": "KEIS_20260624_11299",
+      "SOURCE_URL": "https://www.keis.or.kr/keis/ko/proj/113/pblc/detail.do?categoryIdx=131&pubIdx=11299",
+      "SOURCE_DATE": "2026-06-24",
+      "PUBLISHER": "한국고용정보원",
+      "TITLE": "고용24 년차 현황 및 데이터 분석 보고서 - 중장년 고용활성화 중심으로 심층 분석 -",
+      "EXTRACTED_EVIDENCE": [
+        "한국고용정보원은 고용24 데이터를 바탕으로 인구 고령화와 중장년 고용활성화를 분석한 연구보고서를 공개했다.",
+        "보고서는 중장년 고용서비스와 노동시장 변화를 별도 분석 대상으로 다룬다.",
+        "정책 보도자료가 아닌 연구기관의 데이터 분석 자료로 기관 다양성 홀드아웃을 보완한다."
+      ],
+      "SAFE_WRITER_ANGLES": [
+        "개인의 의지만으로 설명되지 않는 구직 서비스와 노동시장 구조",
+        "다시 일하려는 사람에게 필요한 정보가 흩어져 있을 때 생기는 피로",
+        "재출발을 결심하는 일과 실제 지원 경로를 찾는 일 사이의 거리"
+      ],
+      "PROHIBITED_INFERENCES": [
+        "보고서 원문에 없는 취업률·성공률 수치 생성",
+        "고용24 이용이 취업을 보장한다는 표현",
+        "중장년 전체의 감정과 행동을 하나로 일반화"
+      ],
+      "DEDUPE_KEY": "sha256:KEIS|2026-06-24|11299|MIDLIFE_CAREER_TRANSITION_UNCERTAINTY",
+      "DOWNSTREAM_STATUS": "AWAITING_ABIDE_MAP"
+    },
+    {
+      "SOURCE_ID": "KOSTAT_HONAM_20250710_437544",
+      "SOURCE_URL": "https://sri.kostat.go.kr/board.es?act=view&bid=5148&list_no=437544&mid=a50301010100&ref_bid=5145%2C5146%2C5147%2C11320%2C5148%2C5149&tag=",
+      "SOURCE_DATE": "2025-07-10",
+      "PUBLISHER": "호남지방데이터청",
+      "TITLE": "통계로 본 호남·제주지역 중장년",
+      "EXTRACTED_EVIDENCE": [
+        "지역별 중장년 인구·가구·취업·소득·대출·주택·노후준비 현황이 서로 다르게 나타난다.",
+        "중장년 등록취업자의 주요 산업과 가구 형태는 지역별 차이를 보인다.",
+        "중장년을 하나의 동일한 집단으로 다루기보다 지역·가구·산업 조건을 구분해야 한다는 근거를 제공한다."
+      ],
+      "SAFE_WRITER_ANGLES": [
+        "같은 나이대라도 사는 지역과 가족 조건에 따라 다시 일하는 이유가 달라지는 현실",
+        "경력전환을 개인 성격이 아니라 생활비·가구·지역 일자리 조건과 함께 보는 시선",
+        "누군가의 선택을 쉽게 판단하기 전에 그 사람이 서 있는 생활 조건을 확인하는 글"
+      ],
+      "PROHIBITED_INFERENCES": [
+        "호남·제주 통계를 전국 전체로 일반화",
+        "지역별 수치를 출처 확인 없이 재계산하거나 변형",
+        "건강·자살 통계를 개인의 심리 상태로 연결해 단정"
+      ],
+      "DEDUPE_KEY": "sha256:KOSTAT|2025-07-10|437544|MIDLIFE_CAREER_TRANSITION_UNCERTAINTY",
+      "DOWNSTREAM_STATUS": "AWAITING_ABIDE_MAP"
     }
   ],
   "HOLDOUT_RULE": {
     "MIN_INDEPENDENT_SOURCES": 3,
-    "CURRENT_INDEPENDENT_SOURCES": 3,
-    "SOURCE_DIVERSITY_LIMITATION": "세 자료 모두 고용노동부 계열이므로 기관 다양성 홀드아웃이 추가로 필요하다.",
+    "CURRENT_SOURCE_COUNT": 5,
+    "CURRENT_INSTITUTION_COUNT": 3,
+    "INSTITUTIONS": [
+      "고용노동부",
+      "한국고용정보원",
+      "호남지방데이터청"
+    ],
+    "SOURCE_DIVERSITY_LIMITATION": "기관 다양성 최소 조건은 충족했지만, canonical Queens_Source 기록과 ABIDE 매핑 전에는 생산 승격을 금지한다.",
     "OFFICIAL_TEMPLATE_ALLOWED": false,
     "FRONT_READY_ALLOWED": false
   },
   "NEXT_REQUIRED_TRANSITION": {
     "STEP": "ABIDE_Code_Map",
     "REQUIREMENTS": [
+      "canonical Queens_Source에 5개 SOURCE_ID·URL·date·evidence class 기록",
       "ABIDE_ID 확정",
       "SOURCE_ID와 ABIDE_ID 동시 기록",
       "중복 지문 검사",
