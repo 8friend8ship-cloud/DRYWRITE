@@ -35,6 +35,12 @@ const requiredSourceFields = [
   'DOWNSTREAM_STATUS',
 ];
 
+const DAY_MS = 24 * 60 * 60 * 1000;
+
+function daysBetween(later, earlier) {
+  return Math.floor((new Date(later).getTime() - new Date(earlier).getTime()) / DAY_MS);
+}
+
 test('packet has the required lineage and evidence fields', () => {
   for (const field of requiredTopLevel) {
     assert.ok(packet[field] !== undefined && packet[field] !== null, `${field} is required`);
@@ -47,7 +53,7 @@ test('packet has the required lineage and evidence fields', () => {
 
 test('every source is real, dated, deduplicated, and blocked before ABIDE mapping', () => {
   assert.ok(Array.isArray(packet.SOURCES));
-  assert.ok(packet.SOURCES.length >= 5, 'at least five source records are required');
+  assert.ok(packet.SOURCES.length >= 6, 'at least six source records are required');
 
   const ids = new Set();
   const urls = new Set();
@@ -72,12 +78,20 @@ test('every source is real, dated, deduplicated, and blocked before ABIDE mappin
   }
 });
 
-test('holdout uses multiple institutions and prevents premature promotion', () => {
+test('holdout uses multiple institutions, includes recent evidence, and prevents premature promotion', () => {
   assert.equal(packet.HOLDOUT_RULE.OFFICIAL_TEMPLATE_ALLOWED, false);
   assert.equal(packet.HOLDOUT_RULE.FRONT_READY_ALLOWED, false);
-  assert.ok(packet.HOLDOUT_RULE.CURRENT_SOURCE_COUNT >= 5);
+  assert.ok(packet.HOLDOUT_RULE.CURRENT_SOURCE_COUNT >= 6);
   assert.ok(packet.HOLDOUT_RULE.CURRENT_INSTITUTION_COUNT >= 3);
   assert.ok(new Set(packet.SOURCES.map((source) => source.PUBLISHER)).size >= 3);
+
+  const recentLimit = packet.HOLDOUT_RULE.RECENT_SOURCE_REQUIRED_DAYS;
+  const hasRecentSource = packet.SOURCES.some(
+    (source) => daysBetween(packet.RETRIEVAL_TIME, `${source.SOURCE_DATE}T00:00:00+09:00`) <= recentLimit
+  );
+  assert.equal(packet.HOLDOUT_RULE.RECENT_SOURCE_PRESENT, true);
+  assert.equal(hasRecentSource, true, `a source within ${recentLimit} days is required`);
+
   assert.equal(packet.NEXT_REQUIRED_TRANSITION.STEP, 'ABIDE_Code_Map');
   assert.ok(packet.NEXT_REQUIRED_TRANSITION.REQUIREMENTS.includes('ABIDE_ID 확정'));
   assert.ok(packet.NEXT_REQUIRED_TRANSITION.REQUIREMENTS.some((item) => item.includes('중복')));
