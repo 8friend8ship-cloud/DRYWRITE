@@ -14,8 +14,7 @@ interface AdminViewProps {
     onExitAdmin: () => void;
 }
 
-interface PublishManagerProps extends Omit<AdminViewProps, 'onExitAdmin' | 'onImportArticles'> {
-}
+type PublishManagerProps = Omit<AdminViewProps, 'onExitAdmin' | 'onImportArticles'>;
 
 const PublishManager: React.FC<PublishManagerProps> = ({ articles, onAddArticle, onUpdateArticle, onDeleteArticle }) => {
     const [editingArticle, setEditingArticle] = useState<Article | null>(null);

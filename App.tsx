@@ -12,7 +12,7 @@ const initialArticles: Article[] = [
     id: '1',
     date: '2026-02-05',
     title: "총성의 부검: 100만 유튜버는 어떻게 탄생하는가",
-    coverImageUrl: "https://images.unsplash.com/photo-1599249303258-d5e08c16ea91?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%DD",
+    coverImageUrl: "https://images.unsplash.com/photo-1599249303258-d5e08c16ea91?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     rawText: `# 총성의 부검: 100만 유튜버는 어떻게 탄생하는가
 
 **오가닉 마케터** | C | 2026.02.05

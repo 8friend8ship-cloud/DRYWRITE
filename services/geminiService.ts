@@ -15,7 +15,7 @@ const getAIClient = () => {
         const apiKey = decodeKey(encodedKey);
         // Create a new instance every time to ensure the latest key is used.
         return new GoogleGenAI({ apiKey });
-    } catch (error) {
+    } catch {
          throw new Error("Failed to decode API key. Please set it again in the Admin Panel.");
     }
 };
@@ -58,9 +58,9 @@ export async function generateTitle(content: string): Promise<string> {
     } catch (error) {
         console.error("Error generating title:", error);
         if (error instanceof Error) {
-            throw new Error(`Failed to generate title from Gemini API: ${error.message}`);
+            throw new Error(`Failed to generate title from Gemini API: ${error.message}`, { cause: error });
         }
-        throw new Error("Failed to generate title from Gemini API.");
+        throw new Error("Failed to generate title from Gemini API.", { cause: error });
     }
 }
 
@@ -101,9 +101,9 @@ ${introText}
     } catch (error) {
         console.error("Error generating cover image:", error);
         if (error instanceof Error) {
-            throw new Error(`Failed to generate cover image from Gemini API: ${error.message}`);
+            throw new Error(`Failed to generate cover image from Gemini API: ${error.message}`, { cause: error });
         }
-        throw new Error("Failed to generate cover image from Gemini API.");
+        throw new Error("Failed to generate cover image from Gemini API.", { cause: error });
     }
 }
 
@@ -135,8 +135,8 @@ export async function sendMessage(chat: Chat, message: string): Promise<Generate
     } catch (error) {
         console.error("Error sending chat message:", error);
         if (error instanceof Error) {
-            throw new Error(`Failed to get chat response from Gemini API: ${error.message}`);
+            throw new Error(`Failed to get chat response from Gemini API: ${error.message}`, { cause: error });
         }
-        throw new Error("Failed to get chat response from Gemini API.");
+        throw new Error("Failed to get chat response from Gemini API.", { cause: error });
     }
 }
