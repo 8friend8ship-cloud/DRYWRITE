@@ -1,7 +1,7 @@
 # OpenAI Project Control
 
 - Repository: `8friend8ship-cloud/DRYWRITE`
-- Project role: **Canonical writing engine / e-book and long-form master generator**
+- Project role: **Normalized content template, rendering, preview, and authorized editing frontend**
 - Management status: `ACTIVE_CORE`
 - Last reviewed: `2026-07-30 KST`
 - Runtime code source: this repository
@@ -9,13 +9,13 @@
 
 ## 1. 활용 방향
 
-이 저장소는 프로젝트 전반의 **기준 글(롱폼 마스터)**을 생산하는 핵심 엔진으로 사용한다. 플랫폼별 글을 이 저장소에서 각각 새로 만들지 않고, 여기에서 완성한 기준본을 하위 앱이 편집·요약·영상화한다.
+이 저장소는 backend에서 처리된 **정규화 콘텐츠를 결정적으로 렌더링하는 frontend**로 사용한다. 기준 글 생산, Gemini 처리, 인증, 권한, Google Sheets 쓰기는 Apps Script/backend가 담당한다. DRYWRITE는 승인된 Seed 데이터를 template layer로 변환하고 Vercel UI에서 표시한다.
 
 주요 산출물:
-- 건조한 작가 스타일의 롱폼 마스터
-- 전자책/PDF용 원문
-- R16·성경365·잠언365에 전달할 글 데이터
-- ClipStream·animation에 전달할 장면/대본 원본
+- 정규화 콘텐츠의 기사·전자책 presentation
+- template별 제목·메타·cover·section 배치
+- backend 계약을 사용하는 향후 authorized editing UI
+- Vercel Preview와 플랫폼별 presentation 검증
 
 ## 2. 상호 연계
 
@@ -64,11 +64,12 @@
 
 | 파일/영역 | 태그 | 활용 방향 | 상태 | 다음 점검 |
 |---|---|---|---|---|
-| `package.json` | `[DEPLOY]` | Vite 기반 실행·빌드와 Gemini SDK 의존성 관리 | 확인됨 | 빌드·버전 호환 점검 |
-| `App.tsx` 및 화면 컴포넌트 | `[FRONTEND] [CORE]` | 글 입력·생성·결과 확인 | 검토 예정 | 입력값과 DryWriter 설정 연결 확인 |
-| Gemini 호출 서비스 | `[BACKEND] [SECRET]` | 글 생성 모델 호출 | 검토 예정 | 키의 클라이언트 노출 여부 확인 |
-| 프롬프트/템플릿 파일 | `[PROMPT] [CORE]` | 건조한 작가 및 장르별 템플릿 | 검토 예정 | R16·정보성 글 템플릿 분리 |
-| 내보내기/PDF 영역 | `[INTEGRATION]` | 전자책·하위 앱 전달용 결과 생성 | 검토 예정 | JSON/PDF/마스터 원문 분리 |
+| `package.json` | `[DEPLOY]` | Vite, React, local Tailwind build 의존성 | 확인됨 | 빌드·버전 호환 점검 |
+| `App.tsx` 및 화면 컴포넌트 | `[FRONTEND]` | repository 데이터 검색·탐색·표시 | 확인됨 | 실제 backend 응답 회귀 |
+| `services/contentRepository.ts` | `[BACKEND] [INTEGRATION]` | server/cache/sample 데이터 경계 | 계약 대기 | Apps Script WebApp 계약 연결 |
+| `services/appsScriptClient.ts` | `[BACKEND] [SECRET]` | secret 없는 browser-to-backend 경계 | 계약 대기 | 인증·HTTP schema 확정 |
+| `templates/` | `[PROMPT] [CORE]` | 정규화 데이터의 결정적 presentation 변환 | 확인됨 | 플랫폼 template 확장 |
+| `docs/WORKFLOW_CONTRACT.md` | `[INTEGRATION] [REVIEW]` | backend/frontend 책임과 data contract | 확인됨 | backend 승인 반영 |
 
 ## 6. 수정 진행 규칙
 
@@ -83,3 +84,4 @@
 ## 7. 결정 기록
 
 - `2026-07-30`: DRYWRITE를 전체 프로젝트의 기준 글 생산 엔진으로 지정하고 OpenAI 관리 체계를 시작함.
+- `2026-08-12`: 실제 운영 흐름에 맞춰 기준 글 생산과 Gemini 처리를 Apps Script/backend 책임으로 이동하고, DRYWRITE를 정규화 콘텐츠 template/rendering frontend로 재정의함.
