@@ -23,13 +23,29 @@ export type CommonAppShellContract = {
     defaultLocale: string;
     languagePackMode: 'LOCAL_PACK_ON_DEMAND';
     persistSelection: boolean;
+    bundleChatbotKnowledge: boolean;
+    bundlePersonaRules: boolean;
+    bundleLanguageResearchRules: boolean;
+  };
+  chatbot: {
+    mode: 'LOCAL_FIRST_KNOWLEDGE_PACK';
+    bundledData: Array<'APP_GUIDE' | 'EXPECTED_FAQ' | 'PERSONA' | 'LANGUAGE_RULES' | 'ERROR_HELP' | 'FEATURE_HELP'>;
+    fallbackToCentralAgent: boolean;
+    expectedQuestionPrecompute: boolean;
+  };
+  resume: {
+    mode: 'HYBRID_AUTO_RESUME_AND_MANUAL_OPEN';
+    autoResumeRecentSession: boolean;
+    manualOpenHistoryFile: boolean;
+    localSnapshotFirst: boolean;
+    cloudSyncOptIn: boolean;
   };
   packs: {
     heavyAssetMode: 'ON_DEMAND_DELTA_DOWNLOAD';
     historyMode: 'LOCAL_FIRST';
     cacheManifestRequired: boolean;
     entitlementRequiredForPaidPacks: boolean;
-    downloadableTypes: Array<'LANGUAGE' | 'SCENE' | 'VIDEO' | 'AUDIO' | 'IMAGE' | 'PDF' | 'TEMPLATE' | 'HISTORY'>;
+    downloadableTypes: Array<'LANGUAGE' | 'CHATBOT' | 'PERSONA' | 'SCENE' | 'VIDEO' | 'AUDIO' | 'IMAGE' | 'PDF' | 'TEMPLATE' | 'HISTORY'>;
   };
   privacy: {
     localHistoryDefault: boolean;
@@ -39,7 +55,7 @@ export type CommonAppShellContract = {
 };
 
 export const COMMON_APP_SHELL: CommonAppShellContract = {
-  version: '2026-08-18',
+  version: '2026-08-18.2',
   auth: {
     enabled: true,
     modes: ['GUEST', 'GOOGLE', 'EMAIL'],
@@ -60,14 +76,30 @@ export const COMMON_APP_SHELL: CommonAppShellContract = {
   localization: {
     defaultLocale: 'ko-KR',
     languagePackMode: 'LOCAL_PACK_ON_DEMAND',
-    persistSelection: true
+    persistSelection: true,
+    bundleChatbotKnowledge: true,
+    bundlePersonaRules: true,
+    bundleLanguageResearchRules: true
+  },
+  chatbot: {
+    mode: 'LOCAL_FIRST_KNOWLEDGE_PACK',
+    bundledData: ['APP_GUIDE', 'EXPECTED_FAQ', 'PERSONA', 'LANGUAGE_RULES', 'ERROR_HELP', 'FEATURE_HELP'],
+    fallbackToCentralAgent: true,
+    expectedQuestionPrecompute: true
+  },
+  resume: {
+    mode: 'HYBRID_AUTO_RESUME_AND_MANUAL_OPEN',
+    autoResumeRecentSession: true,
+    manualOpenHistoryFile: true,
+    localSnapshotFirst: true,
+    cloudSyncOptIn: true
   },
   packs: {
     heavyAssetMode: 'ON_DEMAND_DELTA_DOWNLOAD',
     historyMode: 'LOCAL_FIRST',
     cacheManifestRequired: true,
     entitlementRequiredForPaidPacks: true,
-    downloadableTypes: ['LANGUAGE', 'SCENE', 'VIDEO', 'AUDIO', 'IMAGE', 'PDF', 'TEMPLATE', 'HISTORY']
+    downloadableTypes: ['LANGUAGE', 'CHATBOT', 'PERSONA', 'SCENE', 'VIDEO', 'AUDIO', 'IMAGE', 'PDF', 'TEMPLATE', 'HISTORY']
   },
   privacy: {
     localHistoryDefault: true,
