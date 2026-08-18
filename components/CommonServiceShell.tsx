@@ -24,9 +24,9 @@ export const CommonServiceShell: React.FC = () => {
         </section>
 
         <section className="rounded-lg border border-gray-800 p-3">
-          <div className="text-xs text-gray-500">LANGUAGE PACK</div>
-          <div className="mt-1 text-sm">필요한 언어팩만 기기에 내려받아 재사용</div>
-          <div className="mt-2 text-xs text-gray-600">기본 {COMMON_APP_SHELL.localization.defaultLocale}</div>
+          <div className="text-xs text-gray-500">LANGUAGE + CHATBOT PACK</div>
+          <div className="mt-1 text-sm">언어팩과 앱설명·예상질문·페르소나·언어규칙을 로컬 JSON Pack으로 함께 다운로드</div>
+          <div className="mt-2 text-xs text-gray-600">기본 {COMMON_APP_SHELL.localization.defaultLocale} · 중앙 호출은 로컬 답변이 부족할 때만</div>
         </section>
 
         <section className="rounded-lg border border-gray-800 p-3">
@@ -36,9 +36,9 @@ export const CommonServiceShell: React.FC = () => {
         </section>
 
         <section className="rounded-lg border border-gray-800 p-3">
-          <div className="text-xs text-gray-500">HISTORY</div>
-          <div className="mt-1 text-sm">개인 히스토리는 기기 로컬 우선 저장</div>
-          <div className="mt-2 text-xs text-gray-600">클라우드 동기화는 사용자 선택 시만</div>
+          <div className="text-xs text-gray-500">HISTORY RESUME</div>
+          <div className="mt-1 text-sm">최근 작업은 자동 이어가기 + 필요 시 저장 히스토리 파일 직접 열기</div>
+          <div className="mt-2 text-xs text-gray-600">로컬 Snapshot 우선 · 클라우드 동기화는 선택</div>
         </section>
       </div>
     </aside>
