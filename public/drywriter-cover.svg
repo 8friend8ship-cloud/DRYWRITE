@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="1200" viewBox="0 0 900 1200">
+  <rect width="900" height="1200" fill="#111111"/>
+  <rect x="70" y="70" width="760" height="1060" rx="24" fill="#18181b" stroke="#3f3f46" stroke-width="3"/>
+  <text x="450" y="520" fill="#f4f4f5" font-family="Arial, sans-serif" font-size="72" font-weight="700" text-anchor="middle">DRYWRITER</text>
+  <text x="450" y="600" fill="#a1a1aa" font-family="Arial, sans-serif" font-size="30" text-anchor="middle">Queens → Seed → T1 → ChatGPT → T2 → Final</text>
+  <text x="450" y="680" fill="#34d399" font-family="Arial, sans-serif" font-size="28" text-anchor="middle">API 0 DEFAULT</text>
+</svg>
