@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
 import { CommonServiceShell } from './components/CommonServiceShell';
+import { hydrateDryWriterLocalCache } from './services/contentApiService';
 
 const rootElement = document.getElementById('root');
 if (!rootElement) {
@@ -9,9 +10,15 @@ if (!rootElement) {
 }
 
 const root = ReactDOM.createRoot(rootElement);
-root.render(
-  <React.StrictMode>
-    <App />
-    <CommonServiceShell />
-  </React.StrictMode>
-);
+
+async function bootstrap() {
+  await hydrateDryWriterLocalCache();
+  root.render(
+    <React.StrictMode>
+      <App />
+      <CommonServiceShell />
+    </React.StrictMode>
+  );
+}
+
+void bootstrap();
