@@ -20,13 +20,18 @@ interface AppsScriptEnvelope<T> {
 }
 
 export class AppsScriptContractError extends Error {
+  readonly code: string;
+  readonly retryable: boolean;
+
   constructor(
     message: string,
-    readonly code = 'APPS_SCRIPT_CONTRACT_ERROR',
-    readonly retryable = false,
+    code = 'APPS_SCRIPT_CONTRACT_ERROR',
+    retryable = false,
   ) {
     super(message);
     this.name = 'AppsScriptContractError';
+    this.code = code;
+    this.retryable = retryable;
   }
 }
 
