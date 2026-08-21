@@ -33,7 +33,7 @@ export function buildDrywriterStageMatrix(contract: FrontContract): TemplateStag
   const optional = [...new Set((contract.optionalFields ?? []).map((field) => field.trim()).filter(Boolean))];
   const inferred = !contract.optionalFields;
   return (Object.keys(stageRoles) as DrywriterStage[]).map((stage) => ({
-    templateId: \`DRYWRITE-\${stage}-\${contract.appId}-v0.1\`,
+    templateId: `DRYWRITE-${stage}-${contract.appId}-v0.1`,
     stage,
     requiredFields: required,
     optionalFields: optional,
