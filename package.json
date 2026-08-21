@@ -8,7 +8,7 @@
     "build": "npm run test:drywriter && vite build",
     "typecheck": "tsc --noEmit",
     "lint": "eslint .",
-    "test:drywriter": "node --experimental-strip-types services/drywriterGate.test.ts && node --experimental-strip-types services/drywriterTemplateFactory.test.ts && node --experimental-strip-types services/appTemplatePackRegistry.test.ts",
+    "test:drywriter": "node --experimental-strip-types services/drywriterGate.test.ts && node --experimental-strip-types services/drywriterTemplateFactory.test.ts && node --experimental-strip-types services/appTemplatePackRegistry.test.ts && node --experimental-strip-types services/drywriterMvpPipeline.test.ts && node --experimental-strip-types services/appsScriptClient.test.ts",
     "verify": "npm run lint && npm run typecheck && npm run build",
     "preview": "vite preview"
   },
