@@ -1,114 +1,72 @@
-
-import React, { useState, useCallback } from 'react';
-import type { Article } from '../types';
+import { useCallback, useState, type ChangeEvent } from 'react';
+import type { ContentRecord } from '../types';
 
 interface DataManagerProps {
-    articles: Article[];
-    onImportArticles: (articles: Article[]) => void;
+  records: ContentRecord[];
+  onImportRecords: (records: ContentRecord[]) => void;
 }
 
-export const DataManager: React.FC<DataManagerProps> = ({ articles, onImportArticles }) => {
-    const [error, setError] = useState<string | null>(null);
+function isContentRecord(value: unknown): value is ContentRecord {
+  if (!value || typeof value !== 'object') return false;
+  const record = value as Partial<ContentRecord>;
+  return typeof record.contentId === 'string'
+    && typeof record.title === 'string'
+    && typeof record.rawText === 'string'
+    && typeof record.templateId === 'string'
+    && Array.isArray(record.tags);
+}
 
-    const handleExport = useCallback(() => {
-        try {
-            const jsonString = JSON.stringify(articles, null, 2);
-            const blob = new Blob([jsonString], { type: 'application/json' });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = 'articles.json';
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-            URL.revokeObjectURL(url);
-        } catch (err) {
-            console.error("Export failed:", err);
-            setError("Failed to export articles.");
+export const DataManager = ({ records, onImportRecords }: DataManagerProps) => {
+  const [error, setError] = useState<string | null>(null);
+
+  const handleExport = useCallback(() => {
+    try {
+      const blob = new Blob([JSON.stringify(records, null, 2)], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const anchor = document.createElement('a');
+      anchor.href = url;
+      anchor.download = 'drywrite-content.json';
+      anchor.click();
+      URL.revokeObjectURL(url);
+      setError(null);
+    } catch {
+      setError('콘텐츠를 내보내지 못했습니다.');
+    }
+  }, [records]);
+
+  const handleImport = (event: ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = () => {
+      try {
+        const parsed: unknown = JSON.parse(String(reader.result));
+        if (!Array.isArray(parsed) || !parsed.every(isContentRecord)) {
+          throw new Error('정규화된 DRYWRITE 콘텐츠 배열이 아닙니다.');
         }
-    }, [articles]);
-
-    const handleImport = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const file = event.target.files?.[0];
-        if (!file) return;
-
-        if (!window.confirm("Are you sure you want to import? This will overwrite all current articles.")) {
-            return;
-        }
-
-        const reader = new FileReader();
-        reader.onload = (e) => {
-            try {
-                const text = e.target?.result;
-                if (typeof text !== 'string') {
-                    throw new Error("File could not be read as text.");
-                }
-                const importedArticles = JSON.parse(text);
-                
-                // Basic validation
-                if (!Array.isArray(importedArticles) || !importedArticles.every(item => 'id' in item && 'title' in item && 'rawText' in item)) {
-                    throw new Error("Invalid file format. The file must be an array of articles.");
-                }
-
-                onImportArticles(importedArticles as Article[]);
-                setError(null);
-            } catch (err) {
-                console.error("Import failed:", err);
-                let message = "Failed to import articles. Please ensure the file is a valid JSON export from this application.";
-                if (err instanceof Error) {
-                    message = err.message;
-                }
-                setError(message);
-            }
-        };
-        reader.onerror = () => {
-             setError("Failed to read the selected file.");
-        }
-        reader.readAsText(file);
-
-        // Reset file input to allow importing the same file again
-        event.target.value = '';
+        onImportRecords(parsed);
+        setError(null);
+      } catch (cause) {
+        setError(cause instanceof Error ? cause.message : '파일을 가져오지 못했습니다.');
+      }
     };
+    reader.onerror = () => setError('파일을 읽지 못했습니다.');
+    reader.readAsText(file);
+    event.target.value = '';
+  };
 
-    return (
-        <div className="bg-zinc-800 p-6 rounded-lg space-y-6 h-fit">
-            <h2 className="text-2xl font-bold">Backup & Share</h2>
-            <p className="text-sm text-gray-400">
-                You can export all your articles into a single JSON file. This file can be used as a backup, or to import your articles on another device or browser.
-            </p>
-            
-            {error && <p className="text-red-500 text-sm bg-red-900/20 p-3 rounded-md">{error}</p>}
-
-            <div className="space-y-4">
-                <button 
-                    onClick={handleExport}
-                    className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-4 rounded-md transition-colors flex items-center justify-center space-x-2"
-                >
-                     <svg xmlns="http://www.w.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
-                    </svg>
-                    <span>Export All Articles (.json)</span>
-                </button>
-
-                <div>
-                    <label 
-                        htmlFor="import-file"
-                        className="w-full bg-gray-600 hover:bg-gray-700 text-white font-bold py-3 px-4 rounded-md transition-colors cursor-pointer flex items-center justify-center space-x-2"
-                    >
-                        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                            <path strokeLinecap="round" strokeLinejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
-                        </svg>
-                        <span>Import Articles from (.json)</span>
-                    </label>
-                     <input 
-                        type="file" 
-                        id="import-file" 
-                        className="hidden" 
-                        accept=".json"
-                        onChange={handleImport}
-                    />
-                </div>
-            </div>
-        </div>
-    );
+  return (
+    <section className="rounded-xl bg-zinc-900 p-6" aria-labelledby="data-manager-title">
+      <h2 id="data-manager-title" className="text-2xl font-bold">Normalized data transfer</h2>
+      <p className="mt-2 text-sm text-zinc-400">이 도구는 승인된 관리자 화면에서만 사용하며 Google Sheets를 대체하지 않습니다.</p>
+      {error && <p role="alert" className="mt-4 rounded bg-red-950/40 p-3 text-sm text-red-300">{error}</p>}
+      <div className="mt-6 grid gap-3 sm:grid-cols-2">
+        <button type="button" onClick={handleExport} className="rounded bg-blue-600 px-4 py-3 font-semibold hover:bg-blue-500">JSON 내보내기</button>
+        <label className="cursor-pointer rounded bg-zinc-700 px-4 py-3 text-center font-semibold hover:bg-zinc-600">
+          JSON 가져오기
+          <input type="file" accept=".json,application/json" onChange={handleImport} className="sr-only" />
+        </label>
+      </div>
+    </section>
+  );
 };
