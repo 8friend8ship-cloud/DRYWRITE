@@ -11,6 +11,18 @@ export interface ContentRecord {
   coverPrompt: string;
   sourceId: string;
   templateId: string;
+  /** Backend-selected persona. DRYWRITE renders it; the browser does not invent one. */
+  personaId?: string;
+  /** Row/id from the canonical persona T1 template registry. */
+  personaTemplateId?: string;
+  /** Canonical writing form selected after Queens/Seed analysis. */
+  formId?: string;
+  /** Seed lineage used to select the form/persona behavior. */
+  writingSeedId?: string;
+  /** Learning-language pack pointer; heavy translated content remains backend/local-pack owned. */
+  learningLanguagePackId?: string;
+  /** Voice-language pack pointer; actual device voice is resolved locally at runtime. */
+  voicePackId?: string;
   status: ContentStatus;
   language: string;
   createdAt: string;
