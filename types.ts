@@ -51,5 +51,6 @@ export interface RenderedArticle {
 export interface ContentListResult {
   records: ContentRecord[];
   source: 'server' | 'cache' | 'sample';
-  integrationStatus: 'CONNECTED' | 'WAITING_BACKEND_CONTRACT';
+  integrationStatus: 'CONNECTED' | 'WAITING_BACKEND_CONTRACT' | 'BACKEND_ERROR_FALLBACK';
+  failureReason?: string;
 }

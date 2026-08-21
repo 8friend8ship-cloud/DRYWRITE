@@ -1,5 +1,5 @@
 import { sampleContent } from '../data/sampleContent';
-import type { AppsScriptClient } from './appsScriptClient';
+import { createAppsScriptClient, type AppsScriptClient } from './appsScriptClient';
 import { readContentCache, writeContentCache } from './contentCache';
 import type { ContentListResult, ContentRecord } from '../types';
 
@@ -10,13 +10,25 @@ export interface ContentRepository {
 }
 
 export class SampleContentRepository implements ContentRepository {
+  constructor(private readonly failureReason = 'Backend contract has not returned a verified response.') {}
+
   async listContent(): Promise<ContentListResult> {
     const cached = readContentCache();
     if (cached?.length) {
-      return { records: cached, source: 'cache', integrationStatus: 'WAITING_BACKEND_CONTRACT' };
+      return {
+        records: cached,
+        source: 'cache',
+        integrationStatus: 'BACKEND_ERROR_FALLBACK',
+        failureReason: this.failureReason,
+      };
     }
     writeContentCache(sampleContent);
-    return { records: sampleContent, source: 'sample', integrationStatus: 'WAITING_BACKEND_CONTRACT' };
+    return {
+      records: sampleContent,
+      source: 'sample',
+      integrationStatus: 'BACKEND_ERROR_FALLBACK',
+      failureReason: this.failureReason,
+    };
   }
 
   async getContent(contentId: string): Promise<ContentRecord | null> {
@@ -47,4 +59,40 @@ export class AppsScriptContentRepository implements ContentRepository {
   }
 }
 
-export const contentRepository: ContentRepository = new SampleContentRepository();
+class ResilientContentRepository implements ContentRepository {
+  constructor(
+    private readonly primary: ContentRepository,
+    private readonly fallbackFactory: (reason: string) => ContentRepository,
+  ) {}
+
+  async listContent(): Promise<ContentListResult> {
+    try {
+      return await this.primary.listContent();
+    } catch (error) {
+      const reason = error instanceof Error ? error.message : 'Unknown Apps Script error';
+      return this.fallbackFactory(reason).listContent();
+    }
+  }
+
+  async getContent(contentId: string): Promise<ContentRecord | null> {
+    try {
+      return await this.primary.getContent(contentId);
+    } catch (error) {
+      const reason = error instanceof Error ? error.message : 'Unknown Apps Script error';
+      return this.fallbackFactory(reason).getContent(contentId);
+    }
+  }
+
+  saveContent(record: ContentRecord): Promise<ContentRecord> {
+    return this.primary.saveContent(record);
+  }
+}
+
+export const DRYWRITE_WEB_APP_URL =
+  import.meta.env.VITE_DRYWRITE_WEB_APP_URL ||
+  'https://script.google.com/macros/s/AKfycbxNPNmtCEeIjLJuUnfp-sTdEgQOzUUA_2cMkyqCzhaUJcRvYwppBgtSuPjbezWCn2zKrw/exec';
+
+export const contentRepository: ContentRepository = new ResilientContentRepository(
+  new AppsScriptContentRepository(createAppsScriptClient({ webAppUrl: DRYWRITE_WEB_APP_URL })),
+  (reason) => new SampleContentRepository(reason),
+);
