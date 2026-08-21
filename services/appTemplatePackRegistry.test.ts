@@ -1,12 +1,12 @@
 import { strict as assert } from 'node:assert';
-import { checkAllAppTemplatePacks, DRYWRITE_TARGET_APPS } from './appTemplatePackRegistry';
+import { checkAllAppTemplatePacks, DRYWRITE_TARGET_APPS } from './appTemplatePackRegistry.ts';
 
 const base = DRYWRITE_TARGET_APPS.map((appId) => ({
   appId,
-  requirementId: \`REQ-\${appId}-v1\`,
-  seedTemplateId: \`\${appId}-SEED-v0.1\`,
-  t1TemplateId: \`\${appId}-T1-v0.1\`,
-  t2TemplateId: \`\${appId}-T2-v0.1\`,
+  requirementId: `REQ-${appId}-v1`,
+  seedTemplateId: `${appId}-SEED-v0.1`,
+  t1TemplateId: `${appId}-T1-v0.1`,
+  t2TemplateId: `${appId}-T2-v0.1`,
   githubContractReady: true,
   appsScriptFunctionReady: true,
   testFixtureReady: true,
