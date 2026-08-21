@@ -1,5 +1,5 @@
 import { strict as assert } from 'node:assert';
-import { buildDrywriterStageMatrix } from './drywriterTemplateFactory';
+import { buildDrywriterStageMatrix } from './drywriterTemplateFactory.ts';
 
 const matrix = buildDrywriterStageMatrix({
   appId: 'DRYWRITE',
