@@ -1,5 +1,5 @@
 import { strict as assert } from 'node:assert';
-import { checkDrywriterGate } from './drywriterGate';
+import { checkDrywriterGate } from './drywriterGate.ts';
 
 const base = {
   personaId: 'DRYWRITER',
