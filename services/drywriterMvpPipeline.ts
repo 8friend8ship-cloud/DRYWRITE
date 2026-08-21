@@ -1,5 +1,5 @@
 import type { ContentRecord } from '../types';
-import { checkDrywriterGate } from './drywriterGate';
+import { checkDrywriterGate } from './drywriterGate.ts';
 
 export interface DrywriterMvpInput {
   seed: {
