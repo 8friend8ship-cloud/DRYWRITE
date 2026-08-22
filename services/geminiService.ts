@@ -6,21 +6,23 @@ type LocalChat = {
 const normalize = (text: string) => String(text || '').replace(/\s+/g, ' ').trim();
 const sentences = (text: string) => normalize(text).split(/(?<=[.!?。！？])\s+/).filter(Boolean);
 
+function localTitle(content: string): string {
+  const firstHeading = String(content || '').split('\n').find(line => /^#{1,3}\s+/.test(line.trim()));
+  if (firstHeading) return firstHeading.replace(/^#{1,3}\s+/, '').trim().slice(0, 70);
+  const first = sentences(content)[0] || '건조한작가 기록';
+  return first.replace(/["'“”‘’]/g, '').split(' ').filter(Boolean).slice(0, 10).join(' ').slice(0, 70) || '건조한작가 기록';
+}
+
 export async function testApiKey(_apiKey: string): Promise<boolean> {
-  // Canonical DryWriter runtime does not require a browser API key.
   return true;
 }
 
 export async function generateTitle(content: string): Promise<string> {
-  const firstHeading = String(content || '').split('\n').find(line => /^#{1,3}\s+/.test(line.trim()));
-  if (firstHeading) return firstHeading.replace(/^#{1,3}\s+/, '').trim().slice(0, 70);
-  const first = sentences(content)[0] || '건조한작가 기록';
-  const words = first.replace(/["'“”‘’]/g, '').split(' ').filter(Boolean).slice(0, 10);
-  return words.join(' ').slice(0, 70) || '건조한작가 기록';
+  return localTitle(content);
 }
 
 export async function generateCoverImage(title: string, content: string): Promise<string> {
-  const safeTitle = (title || generateTitle(content) as any).toString().slice(0, 40)
+  const safeTitle = String(title || localTitle(content)).slice(0, 40)
     .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
   const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="900" height="1200" viewBox="0 0 900 1200"><rect width="900" height="1200" fill="#f4f0e8"/><rect x="70" y="70" width="760" height="1060" rx="36" fill="#fffdf7" stroke="#222" stroke-width="4"/><path d="M120 300H780M120 860H780" stroke="#222" stroke-width="3"/><text x="120" y="420" font-family="sans-serif" font-size="54" font-weight="700" fill="#161616">${safeTitle}</text><text x="120" y="940" font-family="sans-serif" font-size="28" fill="#555">DRY WRITER · T2 LOCAL COVER</text></svg>`;
   return `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svg)}`;
