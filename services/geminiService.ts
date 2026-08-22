@@ -1,142 +1,49 @@
-
-import { GoogleGenAI, Chat, GenerateContentResponse } from "@google/genai";
-
-const API_KEY_STORAGE_KEY = 'drywriter_api_key';
-
-// This is simple obfuscation (Base64), not strong encryption.
-const decodeKey = (encodedKey: string) => atob(encodedKey);
-
-const getAIClient = () => {
-    const encodedKey = localStorage.getItem(API_KEY_STORAGE_KEY);
-    if (!encodedKey) {
-        throw new Error("API Key not found. Please set your API Key in the Admin Panel.");
-    }
-    try {
-        const apiKey = decodeKey(encodedKey);
-        // Create a new instance every time to ensure the latest key is used.
-        return new GoogleGenAI({ apiKey });
-    } catch (error) {
-         throw new Error("Failed to decode API key. Please set it again in the Admin Panel.");
-    }
+type LocalChat = {
+  source: string;
+  sendMessage: (args: { message: string }) => Promise<{ text: string }>;
 };
 
-export async function testApiKey(apiKey: string): Promise<boolean> {
-    if (!apiKey) return false;
-    try {
-        const ai = new GoogleGenAI({ apiKey });
-        // A very lightweight call to test connectivity and authentication
-        await ai.models.generateContent({
-            model: 'gemini-3-flash-preview',
-            contents: 'test',
-        });
-        return true;
-    } catch (error) {
-        console.error("API Key Test Failed:", error);
-        return false;
-    }
+const normalize = (text: string) => String(text || '').replace(/\s+/g, ' ').trim();
+const sentences = (text: string) => normalize(text).split(/(?<=[.!?。！？])\s+/).filter(Boolean);
+
+export async function testApiKey(_apiKey: string): Promise<boolean> {
+  // Canonical DryWriter runtime does not require a browser API key.
+  return true;
 }
 
-
 export async function generateTitle(content: string): Promise<string> {
-    const ai = getAIClient();
-    const truncatedContent = content.substring(0, 2000);
-    const prompt = `Based on the following text, suggest a compelling and short title for an e-book. Return only the title text, with no extra formatting, labels, or quotation marks. The title should be concise and captivating.
-
-    TEXT:
-    ---
-    ${truncatedContent}
-    ---
-    
-    TITLE:`;
-
-    try {
-        const response = await ai.models.generateContent({
-            model: 'gemini-3-flash-preview',
-            contents: prompt,
-        });
-        return (response.text ?? '').trim();
-    } catch (error) {
-        console.error("Error generating title:", error);
-        if (error instanceof Error) {
-            throw new Error(`Failed to generate title from Gemini API: ${error.message}`);
-        }
-        throw new Error("Failed to generate title from Gemini API.");
-    }
+  const firstHeading = String(content || '').split('\n').find(line => /^#{1,3}\s+/.test(line.trim()));
+  if (firstHeading) return firstHeading.replace(/^#{1,3}\s+/, '').trim().slice(0, 70);
+  const first = sentences(content)[0] || '건조한작가 기록';
+  const words = first.replace(/["'“”‘’]/g, '').split(' ').filter(Boolean).slice(0, 10);
+  return words.join(' ').slice(0, 70) || '건조한작가 기록';
 }
 
 export async function generateCoverImage(title: string, content: string): Promise<string> {
-    const ai = getAIClient();
-    const introText = content.substring(0, 500); // Use the first 500 characters as the intro
-    const prompt = `Create a cover image for an e-book. The image should be in a simple infographic style, using clean lines, simple shapes, and a limited color palette to visually represent the key concepts from the provided title and introductory text. Do not include any text, letters, or words in the image. The style should be modern, symbolic, and clean.
-
-TITLE: "${title}"
-
-INTRODUCTORY TEXT:
----
-${introText}
----
-`;
-    
-    try {
-        const response = await ai.models.generateContent({
-            model: 'gemini-2.5-flash-image',
-            contents: {
-                parts: [{ text: prompt }],
-            },
-            config: {
-                imageConfig: {
-                    aspectRatio: "3:4",
-                },
-            },
-        });
-
-        for (const part of response.candidates[0].content.parts) {
-            if (part.inlineData) {
-                const base64EncodeString: string = part.inlineData.data;
-                return `data:image/png;base64,${base64EncodeString}`;
-            }
-        }
-        throw new Error("No image data found in Gemini API response.");
-
-    } catch (error) {
-        console.error("Error generating cover image:", error);
-        if (error instanceof Error) {
-            throw new Error(`Failed to generate cover image from Gemini API: ${error.message}`);
-        }
-        throw new Error("Failed to generate cover image from Gemini API.");
-    }
+  const safeTitle = (title || generateTitle(content) as any).toString().slice(0, 40)
+    .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="900" height="1200" viewBox="0 0 900 1200"><rect width="900" height="1200" fill="#f4f0e8"/><rect x="70" y="70" width="760" height="1060" rx="36" fill="#fffdf7" stroke="#222" stroke-width="4"/><path d="M120 300H780M120 860H780" stroke="#222" stroke-width="3"/><text x="120" y="420" font-family="sans-serif" font-size="54" font-weight="700" fill="#161616">${safeTitle}</text><text x="120" y="940" font-family="sans-serif" font-size="28" fill="#555">DRY WRITER · T2 LOCAL COVER</text></svg>`;
+  return `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svg)}`;
 }
 
-
-export function createChat(bookContent: string): Chat {
-    const ai = getAIClient();
-    const truncatedContent = bookContent.substring(0, 20000); 
-    const systemInstruction = `You are an intelligent assistant for an e-book. Your role is to answer questions and discuss topics based *only* on the provided content of the book. Do not use external knowledge. If the answer is not in the text, say that you cannot find the information in the provided document.
-
-    Here is the book's content:
-    ---
-    ${truncatedContent}
-    ---
-    `;
-
-    const chat: Chat = ai.chats.create({
-        model: 'gemini-3-flash-preview',
-        config: {
-            systemInstruction,
-        },
-    });
-    return chat;
+export function createChat(bookContent: string): LocalChat {
+  const source = String(bookContent || '');
+  return {
+    source,
+    async sendMessage({ message }) {
+      const queryTerms = normalize(message).toLowerCase().split(/\s+/).filter(term => term.length >= 2);
+      const blocks = source.split(/\n\s*\n/).filter(Boolean);
+      const ranked = blocks
+        .map(block => ({ block, score: queryTerms.reduce((n, term) => n + (block.toLowerCase().includes(term) ? 1 : 0), 0) }))
+        .filter(item => item.score > 0)
+        .sort((a, b) => b.score - a.score)
+        .slice(0, 3);
+      if (!ranked.length) return { text: '제공된 글 안에서 해당 내용을 찾지 못했습니다.' };
+      return { text: ranked.map(item => item.block.trim()).join('\n\n').slice(0, 1800) };
+    }
+  };
 }
 
-export async function sendMessage(chat: Chat, message: string): Promise<GenerateContentResponse> {
-    try {
-        const response = await chat.sendMessage({ message });
-        return response;
-    } catch (error) {
-        console.error("Error sending chat message:", error);
-        if (error instanceof Error) {
-            throw new Error(`Failed to get chat response from Gemini API: ${error.message}`);
-        }
-        throw new Error("Failed to get chat response from Gemini API.");
-    }
+export async function sendMessage(chat: LocalChat, message: string): Promise<{ text: string }> {
+  return chat.sendMessage({ message });
 }
