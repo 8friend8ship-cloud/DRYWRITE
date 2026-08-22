@@ -1,0 +1,7 @@
+{
+  "appId": "APP_DRYWRITE",
+  "writerT1Template": "PTPL-DRYWRITER-BASE-V2",
+  "t2Template": "T2_DRYWRITE_FRONT_READER_V2",
+  "writerLineage": ["66_WRITING_FORMAT_QUEENS","67_WRITING_STYLE_SEED","68_PERSONA_T1_TEMPLATE"],
+  "runtimeStatus": "BOUND_SYNC_X2_PENDING"
+}
