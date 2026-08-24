@@ -1,4 +1,5 @@
 const ADSENSE_SCRIPT_ID = 'google-adsense-script';
+const ADMIN_GUARD_STYLE_ID = 'drywrite-admin-ad-guard';
 const DEFAULT_ADSENSE_CLIENT = 'ca-pub-2826263278655860';
 const DEFAULT_EXCLUDED_PATHS = ['/login', '/settings', '/privacy', '/terms', '/api'];
 
@@ -29,8 +30,54 @@ export function isAdSensePathAllowed(pathname?: string): boolean {
   );
 }
 
+function isAdminSurface(): boolean {
+  if (typeof document === 'undefined') return false;
+  return Array.from(document.querySelectorAll('h1')).some(
+    (heading) => heading.textContent?.trim() === 'Admin Panel',
+  );
+}
+
+function syncAdminAdGuard(): void {
+  if (typeof document === 'undefined') return;
+  const existingStyle = document.getElementById(ADMIN_GUARD_STYLE_ID);
+
+  if (isAdminSurface()) {
+    document.getElementById(ADSENSE_SCRIPT_ID)?.remove();
+    if (!existingStyle) {
+      const style = document.createElement('style');
+      style.id = ADMIN_GUARD_STYLE_ID;
+      style.textContent = [
+        '.adsbygoogle',
+        'ins.adsbygoogle',
+        'iframe[src*="googlesyndication"]',
+        'iframe[src*="doubleclick"]',
+        '[id^="google_ads"]',
+        '[class*="google-auto-placed"]',
+      ].join(',') + '{display:none!important;visibility:hidden!important;pointer-events:none!important;}';
+      document.head.appendChild(style);
+    }
+    return;
+  }
+
+  existingStyle?.remove();
+}
+
+function installAdminSurfaceObserver(): void {
+  if (typeof document === 'undefined') return;
+  if ((window as any).__drywriteAdminAdGuardInstalled) return;
+  (window as any).__drywriteAdminAdGuardInstalled = true;
+
+  const observer = new MutationObserver(syncAdminAdGuard);
+  observer.observe(document.documentElement, { childList: true, subtree: true });
+  syncAdminAdGuard();
+}
+
 export function installAdSense(): boolean {
   if (typeof document === 'undefined' || typeof window === 'undefined') return false;
+  installAdminSurfaceObserver();
+  syncAdminAdGuard();
+  if (isAdminSurface()) return false;
+
   const client = getAdSenseClient();
   if (!isValidAdSenseClient(client) || !isAdSensePathAllowed()) return false;
   if (document.getElementById(ADSENSE_SCRIPT_ID)) return true;
