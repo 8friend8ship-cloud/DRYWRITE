@@ -7,7 +7,8 @@
     "dev": "vite",
     "prebuild": "node scripts/generate-ads-txt.mjs",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "test:queens": "node --test tests/queens-pending-packet.test.mjs"
   },
   "dependencies": {
     "react": "^19.2.4",

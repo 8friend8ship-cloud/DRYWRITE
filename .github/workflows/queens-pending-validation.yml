@@ -1,0 +1,33 @@
+name: Queens Pending Packet Validation
+
+on:
+  push:
+    branches:
+      - queens/pending-ingestion-20260727
+    paths:
+      - 'queens/pending/**'
+      - 'tests/queens-pending-packet.test.mjs'
+      - 'package.json'
+      - '.github/workflows/queens-pending-validation.yml'
+  pull_request:
+    paths:
+      - 'queens/pending/**'
+      - 'tests/queens-pending-packet.test.mjs'
+      - 'package.json'
+      - '.github/workflows/queens-pending-validation.yml'
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Validate Queens evidence and gates
+        run: npm run test:queens
+      - name: Verify production build remains intact
+        run: |
+          npm install --no-audit --no-fund
+          npm run build
