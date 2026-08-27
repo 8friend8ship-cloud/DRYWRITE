@@ -1,0 +1,16 @@
+name: DryWrite Vercel Preview Recovery (Disabled)
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Recovery status
+        run: |
+          echo "DISABLED: GitHub Actions VERCEL_TOKEN is not configured."
+          echo "Use connected Vercel Git integration repair or an approved token/deploy hook before re-enabling."
