@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
+import FrontLanguageBotBridge from './FrontLanguageBotBridge';
 import { installAdSense } from './services/adsense';
 
 installAdSense();
@@ -14,5 +15,6 @@ const root = ReactDOM.createRoot(rootElement);
 root.render(
   <React.StrictMode>
     <App />
+    <FrontLanguageBotBridge appId="APP_DRYWRITE" />
   </React.StrictMode>
 );
