@@ -44,6 +44,16 @@ export const HomeView: React.FC<HomeViewProps> = ({
     <div className="bg-black min-h-screen">
         <Header onMenuClick={onMenuClick}/>
         <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            <section className="mb-8 overflow-hidden rounded-2xl border border-zinc-800 bg-gradient-to-br from-zinc-950 via-zinc-900 to-emerald-950/40 p-6 sm:p-8" aria-label="DryWriter landing">
+                <p className="text-xs font-semibold uppercase tracking-[0.24em] text-emerald-300">DRYWRITE · Reader & Library</p>
+                <h2 className="mt-3 max-w-3xl text-3xl font-bold leading-tight text-white sm:text-4xl">저장된 자료를 읽을 수 있는 글로 정리하고, 다시 쓸 수 있는 Seed와 템플릿으로 남깁니다.</h2>
+                <p className="mt-4 max-w-2xl text-sm leading-6 text-zinc-300">검색·읽기·백데이터 상태·Seed→T1→T2 계보를 한 화면에서 확인합니다. 연결되지 않은 기능은 성공처럼 숨기지 않고 현재 상태를 그대로 표시합니다.</p>
+                <div className="mt-6 flex flex-wrap gap-3">
+                    <a href="#drywrite-library" className="rounded-lg bg-white px-4 py-2 text-sm font-semibold text-black hover:bg-zinc-200 focus:outline-none focus:ring-2 focus:ring-emerald-300">글 둘러보기</a>
+                    <button type="button" onClick={onMenuClick} className="rounded-lg border border-zinc-600 px-4 py-2 text-sm font-semibold text-white hover:border-zinc-400 focus:outline-none focus:ring-2 focus:ring-emerald-300">전체 글 메뉴</button>
+                </div>
+            </section>
+
             <div className="mb-4 flex flex-wrap items-center gap-2 text-xs text-zinc-400" aria-label="데이터 연결 상태">
                 <span className="rounded-full border border-zinc-700 px-3 py-1">Data: {dataSource.toUpperCase()}</span>
                 {integrationStatus === 'CONNECTED' ? (
@@ -67,7 +77,7 @@ export const HomeView: React.FC<HomeViewProps> = ({
                 <p>Unverified claims: {mvpProof.unverifiedClaims.length}</p>
             </section>
 
-            <div className="relative mb-8">
+            <div id="drywrite-library" className="relative mb-8 scroll-mt-8">
                 <input
                     type="text"
                     placeholder="검색어를 입력하세요."
