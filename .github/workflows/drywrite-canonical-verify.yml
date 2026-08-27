@@ -1,0 +1,28 @@
+name: DryWrite Canonical Verify
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches:
+      - integration/canonical-clean-20260827
+      - preview/canonical-clean-20260827
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+      - name: Install
+        run: npm install --no-audit --no-fund
+      - name: Build
+        run: npm run build
