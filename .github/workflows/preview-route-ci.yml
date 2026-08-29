@@ -1,0 +1,26 @@
+name: DryWrite Preview Route CI
+
+on:
+  push:
+    branches:
+      - fix/preview-spa-route-20260829
+
+permissions:
+  contents: read
+
+jobs:
+  validate-preview-route:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Validate Vercel SPA rewrite contract
+        run: |
+          node -e "const fs=require('fs'); const c=JSON.parse(fs.readFileSync('vercel.json','utf8')); if(!Array.isArray(c.rewrites)||!c.rewrites.some(r=>r.source==='/((?!api/).*)'&&r.destination==='/index.html')) process.exit(1); console.log('SPA_REWRITE_PASS')"
+      - name: Install
+        run: npm install --no-audit --no-fund
+      - name: Build
+        run: npm run build
