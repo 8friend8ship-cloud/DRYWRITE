@@ -2,6 +2,51 @@ import type { ContentRecord } from '../types';
 
 export const sampleContent: ContentRecord[] = [
   {
+    contentId: 'DRYWRITE_18748_20260903',
+    title: '교육보다 ‘지역의 실제 연결’이 먼저 필요한 이유',
+    rawText: `# 교육보다 ‘지역의 실제 연결’이 먼저 필요한 이유
+
+**건조한작가** | 중장년 경력전환 | 2026.09.03
+
+---
+
+중장년 재취업은 교육 프로그램 수보다 지역 기업이 필요한 직무를 찾고, 구직자의 기존 경력을 그 직무와 연결하는 과정에서 성패가 갈린다.
+
+## 교육을 더 받는 것이 답이 아닐 때
+
+한 기관이 교육만 제공해서 끝내면 구직자는 또 수료증만 늘어날 수 있다. 반대로 고용센터·중장년내일센터·지자체·직업훈련기관이 기업 수요와 구직자의 기존 경험을 함께 보고 적합직무를 발굴하면 지원은 실제 매칭에 가까워진다.
+
+2025년 지역 고용센터 시범 운영이 보여준 핵심도 기관 수를 늘리는 것 자체보다 중장년 친화기업과 적합직무를 찾고 연결 사례를 만드는 데 있다.
+
+## 네트워크도 일자리를 대신 만들 수는 없다
+
+지역 기관이 서로 연결돼 있어도 지역 산업의 채용 수요와 기업 참여가 약하면 성과는 제한적이다. 제도의 존재와 실제 취업 성과는 같은 말이 아니다.
+
+개인 입장에서는 교육을 하나 더 추가하기 전에 현재 경력이 지역에서 어떤 직무로 번역될 수 있는지, 어떤 기관이 기업과 직접 연결하는지부터 확인하는 편이 현실적이다.
+
+## 확인할 순서
+
+1. 기존 경력에서 재사용 가능한 경험을 정리한다.
+2. 지역 고용센터·중장년내일센터의 기업 연결 프로그램을 확인한다.
+3. 교육보다 적합직무·기업 매칭 경로를 우선 확인한다.
+4. 실제 매칭 결과와 업무 경험을 경력 증거로 남긴다.
+
+지역 고용 네트워크 확대가 취업을 보장하지는 않는다. 지역 산업·기업 수요와 개인 경력에 따라 실제 결과는 달라질 수 있다.`,
+    summary: '중장년 재취업에서 교육 횟수보다 지역 기업·적합직무와 기존 경력을 실제로 연결하는 구조가 왜 중요한지 검증합니다.',
+    category: 'Midlife Career',
+    tags: ['중장년', '재취업', '고용센터', '경력전환'],
+    coverImageUrl: '/covers/thinking-routine.svg',
+    coverPrompt: 'Midlife career transition network connecting experience, local employers and public employment services, restrained editorial illustration, no text.',
+    sourceId: 'MOEL_20251217_18748|QRES_138A9387',
+    templateId: 'PTPL-DRYWRITER-BASE-V2',
+    formId: 'FORM_REALITY_DEBATE_ESSAY',
+    writingSeedId: 'SEED_CHATGPT_18748_20260903',
+    status: 'READY',
+    language: 'ko',
+    createdAt: '2026-09-03T11:35:00+09:00',
+    updatedAt: '2026-09-03T11:35:00+09:00',
+  },
+  {
     contentId: 'sample-001',
     title: '총성의 부검: 100만 유튜버는 어떻게 탄생하는가',
     rawText: `# 총성의 부검: 100만 유튜버는 어떻게 탄생하는가
