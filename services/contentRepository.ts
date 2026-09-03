@@ -47,9 +47,16 @@ export class AppsScriptContentRepository implements ContentRepository {
   }
 }
 
+// Central WEBAPP_TEMPLATE_05 CONFIG canonical Writer endpoint.
+// It was runtime-verified against DRYWRITE_FRONT_API_V1 with HEALTH x2 and LIST_CONTENT x2
+// before this binding was enabled. The env value remains the preferred override so a later
+// central deployment can be promoted without changing client code.
+const VERIFIED_CANONICAL_APPS_SCRIPT_URL =
+  'https://script.google.com/macros/s/AKfycbxNPNmtCEeIjLJuUnfp-sTdEgQOzUUA_2cMkyqCzhaUJcRvYwppBgtSuPjbezWCn2zKrw/exec';
+
 function configuredAppsScriptUrl(): string {
   const meta = import.meta as ImportMeta & { env?: Record<string, string | undefined> };
-  return String(meta.env?.VITE_DRYWRITE_APPS_SCRIPT_URL || '').trim();
+  return String(meta.env?.VITE_DRYWRITE_APPS_SCRIPT_URL || VERIFIED_CANONICAL_APPS_SCRIPT_URL).trim();
 }
 
 function createContentRepository(): ContentRepository {
@@ -58,7 +65,6 @@ function createContentRepository(): ContentRepository {
   return new AppsScriptContentRepository(createAppsScriptClient({ webAppUrl }));
 }
 
-// The frontend never invents a backend endpoint. A preview/production environment must
-// explicitly provide VITE_DRYWRITE_APPS_SCRIPT_URL after the corresponding Apps Script
-// DRYWRITE_FRONT_API_V1 contract has been installed and runtime-verified.
+// The frontend only uses a centrally registered and runtime-verified backend endpoint.
+// Public reads are automatic. SAVE_CONTENT remains backend-authorized and fail-closed.
 export const contentRepository: ContentRepository = createContentRepository();
