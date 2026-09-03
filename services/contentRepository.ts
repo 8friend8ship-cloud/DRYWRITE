@@ -1,5 +1,5 @@
 import { sampleContent } from '../data/sampleContent';
-import type { AppsScriptClient } from './appsScriptClient';
+import { createAppsScriptClient, type AppsScriptClient } from './appsScriptClient';
 import { readContentCache, writeContentCache } from './contentCache';
 import type { ContentListResult, ContentRecord } from '../types';
 
@@ -47,4 +47,18 @@ export class AppsScriptContentRepository implements ContentRepository {
   }
 }
 
-export const contentRepository: ContentRepository = new SampleContentRepository();
+function configuredAppsScriptUrl(): string {
+  const meta = import.meta as ImportMeta & { env?: Record<string, string | undefined> };
+  return String(meta.env?.VITE_DRYWRITE_APPS_SCRIPT_URL || '').trim();
+}
+
+function createContentRepository(): ContentRepository {
+  const webAppUrl = configuredAppsScriptUrl();
+  if (!webAppUrl) return new SampleContentRepository();
+  return new AppsScriptContentRepository(createAppsScriptClient({ webAppUrl }));
+}
+
+// The frontend never invents a backend endpoint. A preview/production environment must
+// explicitly provide VITE_DRYWRITE_APPS_SCRIPT_URL after the corresponding Apps Script
+// DRYWRITE_FRONT_API_V1 contract has been installed and runtime-verified.
+export const contentRepository: ContentRepository = createContentRepository();
