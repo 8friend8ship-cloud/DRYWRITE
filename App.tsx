@@ -8,6 +8,21 @@ import type { ContentListResult, ContentRecord } from './types';
 
 type View = 'home' | 'article';
 
+const CONTENT_PATH_PREFIX = '/drywrite/content/';
+
+const readContentIdFromLocation = () => {
+  if (typeof window === 'undefined') return null;
+  const { pathname } = window.location;
+  if (!pathname.startsWith(CONTENT_PATH_PREFIX)) return null;
+  const encodedId = pathname.slice(CONTENT_PATH_PREFIX.length).split('/')[0];
+  if (!encodedId) return null;
+  try {
+    return decodeURIComponent(encodedId);
+  } catch {
+    return encodedId;
+  }
+};
+
 const App = () => {
   const [view, setView] = useState<View>('home');
   const [records, setRecords] = useState<ContentRecord[]>([]);
@@ -28,6 +43,31 @@ const App = () => {
     });
     return () => { active = false; };
   }, []);
+
+  useEffect(() => {
+    if (!records.length) return;
+    const routeContentId = readContentIdFromLocation();
+    if (!routeContentId) return;
+    if (records.some((record) => record.contentId === routeContentId)) {
+      setSelectedId(routeContentId);
+      setView('article');
+    }
+  }, [records]);
+
+  useEffect(() => {
+    const handlePopState = () => {
+      const routeContentId = readContentIdFromLocation();
+      if (routeContentId && records.some((record) => record.contentId === routeContentId)) {
+        setSelectedId(routeContentId);
+        setView('article');
+        return;
+      }
+      setSelectedId(null);
+      setView('home');
+    };
+    window.addEventListener('popstate', handlePopState);
+    return () => window.removeEventListener('popstate', handlePopState);
+  }, [records]);
 
   const articles = useMemo(
     () => records.map(renderArticle).sort((a, b) => b.date.localeCompare(a.date)),
@@ -54,11 +94,13 @@ const App = () => {
   const selectArticle = useCallback((id: string) => {
     setSelectedId(id);
     setView('article');
+    window.history.pushState({}, '', `${CONTENT_PATH_PREFIX}${encodeURIComponent(id)}`);
   }, []);
 
   const goHome = useCallback(() => {
     setSelectedId(null);
     setView('home');
+    window.history.pushState({}, '', '/');
   }, []);
 
   return (
