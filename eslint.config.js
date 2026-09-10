@@ -10,11 +10,16 @@ export default tseslint.config(
   reactHooks.configs.flat.recommended,
   {
     files: ['**/*.{ts,tsx}'],
-    languageOptions: {
-      globals: globals.browser,
-    },
-    rules: {
-      'react-hooks/set-state-in-effect': 'off',
-    },
+    languageOptions: { globals: globals.browser },
+    rules: { 'react-hooks/set-state-in-effect': 'off' },
+  },
+  {
+    files: ['api/**/*.js', 'scripts/**/*.mjs'],
+    languageOptions: { globals: globals.node },
+    rules: { 'no-empty': 'off' },
+  },
+  {
+    files: ['services/adsense.ts'],
+    rules: { '@typescript-eslint/no-explicit-any': 'off' },
   },
 );
