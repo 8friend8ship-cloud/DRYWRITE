@@ -56,7 +56,12 @@ const VERIFIED_CANONICAL_APPS_SCRIPT_URL =
 
 function configuredAppsScriptUrl(): string {
   const meta = import.meta as ImportMeta & { env?: Record<string, string | undefined> };
-  return String(meta.env?.VITE_DRYWRITE_APPS_SCRIPT_URL || VERIFIED_CANONICAL_APPS_SCRIPT_URL).trim();
+  const configured = String(meta.env?.VITE_DRYWRITE_APPS_SCRIPT_URL || '').trim();
+  if (configured) return configured;
+  if (typeof window !== 'undefined' && window.location?.origin) {
+    return new URL('/api/content', window.location.origin).toString();
+  }
+  return VERIFIED_CANONICAL_APPS_SCRIPT_URL;
 }
 
 function createContentRepository(): ContentRepository {
