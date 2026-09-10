@@ -1,0 +1,5 @@
+{
+  "rewrites": [
+    { "source": "/drywrite/content/:path*", "destination": "/index.html" }
+  ]
+}
