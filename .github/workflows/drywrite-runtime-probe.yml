@@ -1,0 +1,52 @@
+name: DRYWRITE Runtime Probe
+
+on:
+  push:
+    branches:
+      - codex/repair-build-baseline
+
+permissions:
+  contents: read
+
+jobs:
+  forced-runtime-probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - name: Force canonical Writer HEALTH and LIST_CONTENT x2
+        shell: bash
+        env:
+          WRITER_URL: https://script.google.com/macros/s/AKfycbxNPNmtCEeIjLJuUnfp-sTdEgQOzUUA_2cMkyqCzhaUJcRvYwppBgtSuPjbezWCn2zKrw/exec
+        run: |
+          set -euo pipefail
+          for spec in "HEALTH X2_HEALTH_1" "HEALTH X2_HEALTH_2" "LIST_CONTENT X2_LIST_1" "LIST_CONTENT X2_LIST_2"; do
+            set -- $spec
+            action="$1"
+            probe="$2"
+            url="${WRITER_URL}?action=${action}&probe=${probe}"
+            if [ "$action" = "LIST_CONTENT" ]; then url="${url}&pageSize=2"; fi
+            body="$(curl --fail --silent --show-error --location --max-time 20 "$url")"
+            BODY="$body" ACTION="$action" python3 - <<'PY'
+          import json, os, sys
+          action=os.environ['ACTION']
+          try:
+              obj=json.loads(os.environ['BODY'])
+          except Exception as exc:
+              print(f"PROBE_FAIL action={action} non_json={type(exc).__name__}")
+              sys.exit(1)
+          ok=(obj.get('ok') is True and obj.get('contractVersion')=='DRYWRITE_FRONT_API_V1' and obj.get('action')==action)
+          data=obj.get('data') if isinstance(obj.get('data'), list) else []
+          ids=[x.get('contentId') for x in data[:2] if isinstance(x,dict) and x.get('contentId')]
+          print(json.dumps({
+              'probe':'DRYWRITE_RUNTIME_X2',
+              'action':action,
+              'ok':ok,
+              'contractVersion':obj.get('contractVersion'),
+              'requestId':obj.get('requestId'),
+              'itemCount':len(data) if action=='LIST_CONTENT' else None,
+              'contentIds':ids if action=='LIST_CONTENT' else None,
+              'errorCode':(obj.get('error') or {}).get('code') if isinstance(obj.get('error'),dict) else None,
+          }, ensure_ascii=False))
+          if not ok: sys.exit(2)
+          PY
+          done

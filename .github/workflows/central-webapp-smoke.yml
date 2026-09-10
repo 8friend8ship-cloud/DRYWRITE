@@ -1,0 +1,65 @@
+name: Central WebApp Readonly Smoke
+
+on:
+  push:
+    branches:
+      - codex/repair-build-baseline
+
+permissions:
+  contents: read
+
+jobs:
+  readonly-webapp-matrix:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Force registered WebApp endpoints now
+        shell: bash
+        run: |
+          set -u
+          failures=0
+          probes=(
+            'WEBAPP_TEMPLATE_01|https://script.google.com/macros/s/AKfycbxNPNmtCEeIjLJuUnfp-sTdEgQOzUUA_2cMkyqCzhaUJcRvYwppBgtSuPjbezWCn2zKrw/exec'
+            'WEBAPP_TEMPLATE_02|https://script.google.com/macros/s/AKfycbyHerL97oP_cAdGFGjCCFSsx10P88yoByAik6Fsn778qYM_x58nz71IT3fBDvZWpnk/exec'
+            'WEBAPP_TEMPLATE_03|https://script.google.com/macros/s/AKfycbynWKaVwG1SRE6uWJ6d4r0Q5wEvKbB5foIuphQBGDwi8P2r2qaP6K0FRAV8krr9R70P/exec'
+            'WEBAPP_TEMPLATE_04|https://script.google.com/macros/s/AKfycbx5WTegTKUnyvFZC_qOaGBPlmKANLwXyNue19jLkFhdFwHnnp1E6_trZeVGdIg7B3GA/exec'
+            'WEBAPP_TEMPLATE_05|https://script.google.com/macros/s/AKfycbzz247_Mwl9c6N1WxmpHAttwHQJB6RCFtaY08XlHgxysz1iEzg7HWDXa3i5oXhDS1jo/exec'
+            'WEBAPP_TEMPLATE_06|https://script.google.com/macros/s/AKfycbx5Sm8FtA7D6iQVNmdoYFON-Y5xHNdNT5a-zZWoxeORL6_nFfqOBoPwA1IYEFKHcKKjoQ/exec'
+            'WEBAPP_TEMPLATE_07|https://script.google.com/macros/s/AKfycbyzSZZqDwMAgqltkfCYQb4-aIZ4zSFlRHkh9dyN5F_Qd7hfUev6oVNqjUSsEtYE3b4VBA/exec'
+            'WEBAPP_TEMPLATE_08|https://script.google.com/macros/s/AKfycbxk7qhwbfJK5qL7xVQZyvHUC9CcGQSjO3WmdUa8ugzGMR0bCZNO6XynVLPHfff4kPg9/exec'
+            'WEBAPP_TEMPLATE_09|https://script.google.com/macros/s/AKfycby5rynajzdtrWcVuwd1W8kT37DHfFYgwg6Bg7C5dlm222FxIYrl3J5l1UQSYNp1FZ8IQg/exec'
+            'WEBAPP_TEMPLATE_10|https://script.google.com/macros/s/AKfycbx7NbHCfVp8-WfcZvdSnXj8JoeOkr0oSSRFA0FAOef0pgSjy5GMVv24_jejs3_1nqGV/exec'
+            'BIBLE365_MAIN_CANONICAL|https://script.google.com/macros/s/AKfycbwHt92CCmk_9Gu6kPYLwrAith_3SrYUnJE7A8_47RoJxUQlbwGgY-Me2E8rCBdY7WBeNQ/exec'
+            'BIBLE365_AUDIO_DELIVERY|https://script.google.com/macros/s/AKfycbwlsqwtVAm4DEU5ugDgleVKxOs2_HECqiOnbLTiLR74Pd25QzNITPjCaHr-llSrG-1Z/exec'
+          )
+          for entry in "${probes[@]}"; do
+            name="${entry%%|*}"
+            base="${entry#*|}"
+            url="${base}?action=HEALTH&probe=CENTRAL_READONLY_FORCE_20260903"
+            tmp="$(mktemp)"
+            meta="$(curl --silent --show-error --location --max-time 20 --output "$tmp" --write-out '%{http_code}|%{content_type}|%{url_effective}' "$url" || true)"
+            code="${meta%%|*}"
+            rest="${meta#*|}"
+            ctype="${rest%%|*}"
+            effective="${rest#*|}"
+            BODY_FILE="$tmp" NAME="$name" CODE="$code" CTYPE="$ctype" EFFECTIVE="$effective" python3 - <<'PY'
+          import json, os
+          name=os.environ['NAME']; code=os.environ['CODE']; ctype=os.environ['CTYPE']; effective=os.environ['EFFECTIVE']
+          raw=open(os.environ['BODY_FILE'],'rb').read(200000)
+          text=raw.decode('utf-8','replace').strip()
+          kind='EMPTY'; ok=False; action=None; contract=None; err=None
+          if text:
+              try:
+                  obj=json.loads(text); kind='JSON'
+                  if isinstance(obj,dict):
+                      ok=(obj.get('ok') is True) or (obj.get('status') in ('OK','PASS','SUCCESS','HEALTHY'))
+                      action=obj.get('action'); contract=obj.get('contractVersion'); err=(obj.get('error') or {}).get('code') if isinstance(obj.get('error'),dict) else None
+              except Exception:
+                  kind='HTML' if '<html' in text.lower() or '<!doctype' in text.lower() else 'TEXT'
+          print(json.dumps({'name':name,'http':code,'contentType':ctype,'kind':kind,'jsonOk':ok,'action':action,'contractVersion':contract,'errorCode':err,'finalHost':effective.split('/')[2] if '://' in effective else effective}, ensure_ascii=False))
+          PY
+            if [ "$code" != "200" ]; then failures=$((failures+1)); fi
+            rm -f "$tmp"
+          done
+          echo "HTTP_FAILURES=$failures"
+          test "$failures" -eq 0
