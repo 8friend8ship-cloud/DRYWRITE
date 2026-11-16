@@ -4,12 +4,16 @@ on:
   push:
     branches:
       - codex/repair-build-baseline
+  pull_request:
+    branches:
+      - main
 
 permissions:
   contents: read
 
 jobs:
   forced-runtime-probe:
+    if: github.event_name == 'push'
     runs-on: ubuntu-latest
     timeout-minutes: 3
     steps:
@@ -50,3 +54,17 @@ jobs:
           if not ok: sys.exit(2)
           PY
           done
+
+  goodway-brand-source-check:
+    name: GOODWAY branding source and build CI
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - run: npm run verify
