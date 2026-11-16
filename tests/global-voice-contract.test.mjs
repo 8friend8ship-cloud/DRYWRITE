@@ -1,5 +1,8 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import { readFileSync } from 'node:fs';
+import { fileURLToPath } from 'node:url';
+import { dirname, join } from 'node:path';
 import {
   GOODWAY_VOICE_CONTRACT_VERSION,
   normalizeSpeechLocale,
@@ -66,4 +69,15 @@ test('public selected browser voice produces only a non-publishable metadata rec
   assert.equal(r.transmittedArticleText,false);
   assert.equal(r.mcpAdapterStatus,'NOT_WIRED');
   assert.ok(!JSON.stringify(r).includes('rawText'));
+});
+
+
+test('reader motion preference disables visible UI animation and transition timing',()=>{
+  const css = readFileSync(join(dirname(fileURLToPath(import.meta.url)), '..', 'styles.css'), 'utf8');
+  const reduced = css.slice(css.indexOf('@media (prefers-reduced-motion: reduce)'));
+  assert.ok(reduced.startsWith('@media (prefers-reduced-motion: reduce)'), 'a reduced-motion media query is required');
+  assert.match(reduced, /animation-duration:\s*0\.01ms\s*!important;/);
+  assert.match(reduced, /animation-iteration-count:\s*1\s*!important;/);
+  assert.match(reduced, /transition-duration:\s*0\.01ms\s*!important;/);
+  assert.match(reduced, /scroll-behavior:\s*auto\s*!important;/);
 });
