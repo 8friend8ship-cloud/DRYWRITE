@@ -81,3 +81,17 @@ test('reader motion preference disables visible UI animation and transition timi
   assert.match(reduced, /transition-duration:\s*0\.01ms\s*!important;/);
   assert.match(reduced, /scroll-behavior:\s*auto\s*!important;/);
 });
+
+
+test('public article card date has sufficient normal-text contrast on zinc-900',()=>{
+  const home = readFileSync(join(dirname(fileURLToPath(import.meta.url)), '..', 'components', 'HomeView.tsx'), 'utf8');
+  assert.match(home, /className="text-xs text-gray-400 mt-2">\{article\.date\}<\/p>/);
+  const luminance = (rgb) => rgb.map((x) => {
+    const c = x / 255;
+    return c <= 0.04045 ? c / 12.92 : ((c + 0.055) / 1.055) ** 2.4;
+  }).reduce((sum, value, index) => sum + value * [0.2126, 0.7152, 0.0722][index], 0);
+  const foreground = luminance([156,163,175]); // Tailwind gray-400
+  const background = luminance([24,24,27]); // Tailwind zinc-900
+  const contrast = (Math.max(foreground, background) + 0.05) / (Math.min(foreground, background) + 0.05);
+  assert.ok(contrast >= 4.5, 'date contrast must meet WCAG AA normal-text threshold');
+});
