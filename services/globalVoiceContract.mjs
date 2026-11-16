@@ -26,7 +26,14 @@ export function normalizeSpeechLocale(language) {
   if (!/^[a-zA-Z]{2,3}(?:-[a-zA-Z0-9]{2,8})*$/.test(input)) return 'und';
   const primary = input.split('-')[0].toLowerCase();
   const matching = LOCALES.find(item => item.code.toLowerCase() === input.toLowerCase());
-  return matching?.code || DEFAULT_LOCALES[primary] || 'und';
+  if (matching) return matching.code;
+  if (input.includes('-')) {
+    try { return Intl.getCanonicalLocales(input)[0] || 'und'; }
+    catch { return 'und'; }
+  }
+  if (DEFAULT_LOCALES[primary]) return DEFAULT_LOCALES[primary];
+  try { return Intl.getCanonicalLocales(input)[0] || 'und'; }
+  catch { return 'und'; }
 }
 
 export function sameSpeechLanguage(a, b) {
