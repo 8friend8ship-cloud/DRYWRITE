@@ -46,6 +46,7 @@ export const GlobalAccessibilityControls = ({
   const [allowRemoteVoice, setAllowRemoteVoice] = useState(false);
   const [micActive, setMicActive] = useState(false);
   const [chromeInstructions, setChromeInstructions] = useState(false);
+  const [supportMode, setSupportMode] = useState<'sight' | 'hands' | 'language' | null>(null);
   const runId = useRef(0);
   const recognition = useRef<Recognition | null>(null);
   const voiceEvents = useRef<Array<{ node: string; state: string; at: string }>>([]);
@@ -248,11 +249,33 @@ export const GlobalAccessibilityControls = ({
 
   return (
     <section aria-label="접근성, 번역, 음성 읽기" className="my-6 rounded-xl border border-zinc-700 bg-zinc-950 p-4 font-sans text-white">
-      <h2 className="text-xl font-bold">누구나 읽고 듣는 굳웨이 라이트</h2>
+      <h2 className="text-xl font-bold">본섬김 접근성 도우미 · 누구나 읽고 듣는 굳웨이 라이트</h2>
       <p className="mt-2 text-sm leading-relaxed text-zinc-300">
         원문이 한국어여도 Chrome 번역으로 다른 언어로 볼 수 있습니다.
         기기 음성, 화면낭독기, 키보드·스위치 제어와 음성 액세스도 사용할 수 있습니다.
       </p>
+      <div className="mt-4 flex flex-wrap gap-3" role="group" aria-label="도움받을 방법 선택">
+        <button type="button" aria-pressed={supportMode === 'sight'}
+          onClick={() => setSupportMode('sight')} className="rounded border border-zinc-500 p-3">
+          화면을 보기 어려워요
+        </button>
+        <button type="button" aria-pressed={supportMode === 'hands'}
+          onClick={() => setSupportMode('hands')} className="rounded border border-zinc-500 p-3">
+          손으로 조작하기 어려워요
+        </button>
+        <button type="button" aria-pressed={supportMode === 'language'}
+          onClick={() => setSupportMode('language')} className="rounded border border-zinc-500 p-3">
+          다른 나라 언어로 보고 싶어요
+        </button>
+      </div>
+      {supportMode && <p role="status" aria-live="polite"
+        className="mt-3 rounded bg-zinc-900 p-3 text-sm leading-relaxed text-white">
+        {supportMode === 'sight'
+          ? '화면낭독기로 제목과 본문을 탐색하거나 아래의 글 읽어주기를 선택하세요. 기기 언어 음성이 없으면 운영체제 화면낭독기를 사용하세요.'
+          : supportMode === 'hands'
+            ? 'Windows 음성 액세스·Android 음성 액세스·스위치 제어로 아래 버튼을 선택할 수 있습니다. 선택형 앱 음성 명령은 별도 마이크 동의가 필요합니다.'
+            : 'Chrome 메뉴의 번역을 선택하면 한국어 원문을 다른 언어로 볼 수 있습니다. 지원되는 데스크톱 Chrome에서는 아래 기기 내 번역도 시도할 수 있습니다.'}
+      </p>}
       <div className="mt-4 flex flex-wrap items-end gap-3">
         <label className="flex flex-col gap-1 text-sm">번역 언어
           <select value={targetLanguage} onChange={e => setTargetLanguage(e.target.value)}
