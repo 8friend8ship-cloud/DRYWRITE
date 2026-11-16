@@ -33,6 +33,9 @@ const App = () => {
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState('');
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [nextPageToken, setNextPageToken] = useState<string | null>(null);
+  const [loadingMore, setLoadingMore] = useState(false);
+  const [loadError, setLoadError] = useState<string | null>(null);
 
   useEffect(() => {
     let active = true;
@@ -40,6 +43,9 @@ const App = () => {
       if (!active) return;
       setRecords(result.records);
       setDataState({ source: result.source, integrationStatus: result.integrationStatus });
+      setNextPageToken(result.nextPageToken ?? null);
+    }).catch(() => {
+      if (active) setLoadError('글 목록을 불러오지 못했습니다. 잠시 후 다시 시도해 주세요.');
     });
     return () => { active = false; };
   }, []);
@@ -68,6 +74,32 @@ const App = () => {
     window.addEventListener('popstate', handlePopState);
     return () => window.removeEventListener('popstate', handlePopState);
   }, [records]);
+
+  const loadMore = useCallback(async () => {
+    if (!nextPageToken || loadingMore) return;
+    const requestedToken = nextPageToken;
+    setLoadingMore(true);
+    setLoadError(null);
+    try {
+      const result = await contentRepository.listContent(requestedToken);
+      setRecords((current) => {
+        const byId = new Map(current.map((record) => [record.contentId, record]));
+        result.records.forEach((record) => byId.set(record.contentId, record));
+        return [...byId.values()];
+      });
+      setDataState({ source: result.source, integrationStatus: result.integrationStatus });
+      if (result.nextPageToken === requestedToken) {
+        setNextPageToken(null);
+        setLoadError('페이지 연결 정보가 반복되어 더 불러오기를 중단했습니다.');
+      } else {
+        setNextPageToken(result.nextPageToken ?? null);
+      }
+    } catch {
+      setLoadError('다음 글 목록을 불러오지 못했습니다. 다시 시도할 수 있습니다.');
+    } finally {
+      setLoadingMore(false);
+    }
+  }, [nextPageToken, loadingMore]);
 
   const articles = useMemo(
     () => records.map(renderArticle).sort((a, b) => b.date.localeCompare(a.date)),
@@ -122,6 +154,11 @@ const App = () => {
           onMenuClick={() => setIsMenuOpen(true)}
           dataSource={dataState.source}
           integrationStatus={dataState.integrationStatus}
+          loadedCount={records.length}
+          hasMore={Boolean(nextPageToken)}
+          loadingMore={loadingMore}
+          loadError={loadError}
+          onLoadMore={loadMore}
         />
       )}
 
