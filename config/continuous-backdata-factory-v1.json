@@ -1,0 +1,16 @@
+{
+  "version": "FRONT_REQUIREMENT_REVERSE_FACTORY_V1_20260823",
+  "appIds": ["APP_DRYWRITE"],
+  "controlTargetId": "FPC_DRYWRITE_20260823",
+  "cycleMinutes": 10,
+  "dailyTargets": {"queens": 600, "seed": 120, "t1": 60, "t2": 30, "assets": 20},
+  "apiAbWindowsKst": [9, 13, 17, 21],
+  "reverseRequirement": ["topic", "searchIntent", "persona", "genre", "platform", "length", "cta", "evidence", "mediaRequirement"],
+  "pipeline": ["FRONT_REQUIREMENT_REVERSE", "QUEENS", "SEED", "T1_FORM_PACKAGE", "T2_PLATFORM_DELTA", "FRONT_READBACK", "PUBLISH_POINTER", "CENTRAL_REINGEST"],
+  "qualityGate": {"requiredFields": 1.0, "evidenceFields": 1.0, "fabricatedNumericClaims": 0, "runtimeReadbackCount": 2},
+  "apiPromotionRule": {"compareOwnVsApprovedApi": true, "qualityGainPoints": 8, "coverageGain": 0.15, "writeBackWinningPatterns": true},
+  "storage": {"hotT2": "COMPACT_JSON", "longText": "DRIVE_OR_BLOGGER_CANONICAL_URL", "reuseBeforeRegenerate": true},
+  "stageHandlers": ["runDryWriterQueensCollectionTrigger", "runDryWriterSeedTrigger", "runDryWriterFirstTemplateTrigger"],
+  "physicalTriggerPolicy": "REUSE_EXISTING_10M_TRIGGERS_NO_DUPLICATE",
+  "approvalBoundary": ["NEW_OAUTH", "NEW_PAID_API_OR_SERVICE", "PUBLIC_PRODUCTION_OR_PUBLISH", "PAYMENT", "DESTRUCTIVE_DELETE"]
+}
