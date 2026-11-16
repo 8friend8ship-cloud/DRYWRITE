@@ -19,7 +19,11 @@ export default async function handler(req, res) {
     upstreamUrl.searchParams.set('pageSize', String(req.query?.pageSize || '100'));
     // Forward only the bounded opaque cursor; keep upstream public approval filtering.
     const pageToken = req.query?.pageToken;
-    if (typeof pageToken === 'string' && pageToken.length > 0 && pageToken.length <= 4096) {
+    if (pageToken !== undefined) {
+      if (typeof pageToken !== 'string' || !pageToken || pageToken.length > 4096) {
+        res.status(400).json({ ok: false, error: { code: 'INVALID_PAGE_TOKEN' } });
+        return;
+      }
       upstreamUrl.searchParams.set('pageToken', pageToken);
     }
   }
