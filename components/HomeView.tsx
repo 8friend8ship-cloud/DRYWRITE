@@ -10,6 +10,11 @@ interface HomeViewProps {
     onMenuClick: () => void;
     dataSource: ContentListResult['source'];
     integrationStatus: ContentListResult['integrationStatus'];
+    loadedCount: number;
+    hasMore: boolean;
+    loadingMore: boolean;
+    loadError: string | null;
+    onLoadMore: () => void;
 }
 
 const Header: React.FC<{ onMenuClick: () => void }> = ({ onMenuClick }) => (
@@ -37,7 +42,7 @@ const ArticleCard: React.FC<{ article: RenderedArticle; onSelect: () => void; }>
     </button>
 );
 
-export const HomeView: React.FC<HomeViewProps> = ({ articles, onSelectArticle, searchQuery, setSearchQuery, onMenuClick, dataSource, integrationStatus }) => {
+export const HomeView: React.FC<HomeViewProps> = ({ articles, onSelectArticle, searchQuery, setSearchQuery, onMenuClick, dataSource, integrationStatus, loadedCount, hasMore, loadingMore, loadError, onLoadMore }) => {
     return (
         <div className="bg-black min-h-screen">
             <Header onMenuClick={onMenuClick}/>
@@ -51,7 +56,7 @@ export const HomeView: React.FC<HomeViewProps> = ({ articles, onSelectArticle, s
                 <div className="relative mb-8">
                     <input 
                         type="text"
-                        placeholder="검색어를 입력하세요."
+                        placeholder="불러온 글에서 검색하세요."
                         value={searchQuery}
                         onChange={(e) => setSearchQuery(e.target.value)}
                         className="w-full p-4 pl-12 bg-zinc-900 text-white border border-zinc-700 rounded-md focus:outline-none focus:ring-2 focus:ring-zinc-500"
@@ -69,6 +74,19 @@ export const HomeView: React.FC<HomeViewProps> = ({ articles, onSelectArticle, s
                     ))}
                 </div>
                 {articles.length === 0 && <p className="py-16 text-center text-zinc-400">검색 결과가 없습니다.</p>}
+                <div className="mt-10 text-center text-sm text-zinc-400" aria-live="polite">
+                    현재 불러온 글 {loadedCount}건에서 검색합니다.
+                    {hasMore && ' 전체 승인 글을 탐색하려면 더 불러오기를 누르세요.'}
+                </div>
+                {loadError && <p role="alert" className="mt-4 text-center text-amber-300">{loadError}</p>}
+                {hasMore && (
+                    <div className="mt-6 flex justify-center">
+                        <button type="button" onClick={onLoadMore} disabled={loadingMore}
+                          className="rounded border border-zinc-600 px-6 py-3 text-white hover:bg-zinc-800 disabled:opacity-60">
+                            {loadingMore ? '글 불러오는 중…' : '더 많은 글 불러오기'}
+                        </button>
+                    </div>
+                )}
             </main>
              <style>{`
                 @keyframes fade-in {
