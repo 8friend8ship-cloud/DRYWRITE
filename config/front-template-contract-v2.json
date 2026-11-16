@@ -2,6 +2,38 @@
   "appId": "APP_DRYWRITE",
   "writerT1Template": "PTPL-DRYWRITER-BASE-V2",
   "t2Template": "T2_DRYWRITE_FRONT_READER_V2",
-  "writerLineage": ["66_WRITING_FORMAT_QUEENS","67_WRITING_STYLE_SEED","68_PERSONA_T1_TEMPLATE"],
-  "runtimeStatus": "BOUND_SYNC_X2_PENDING"
+  "writerLineage": [
+    "66_WRITING_FORMAT_QUEENS",
+    "67_WRITING_STYLE_SEED",
+    "68_PERSONA_T1_TEMPLATE"
+  ],
+  "runtimeStatus": "BOUND_SYNC_X2_PENDING",
+  "optionalT2Storyboard": {
+    "profileId": "GOODWAY_LONGREAD_T2_OVERLAY_V1",
+    "promptProfileSheet": "22_PROMPT_PROFILE_MASTER",
+    "promptProfileStatus": "DRAFT_SPEC_ONLY_RUNTIME_HOLD",
+    "writerFactorySpreadsheetId": "1SI-MQC7drEsxug5_mveiH7iXE2Yw1PzYRQlES8Az7nk",
+    "writerProfile": "DRY_ARCHIVE_MASTER_V2",
+    "originalReaderTemplate": "T2_DRYWRITE_FRONT_READER_V2",
+    "referencePersonaTemplate": "PTPL-EDITORIAL-CURIOSITY-NOTE-V1",
+    "referenceWritingStyleSeed": "WS_WRITE_EDITORIAL_CURIOSITY_V1",
+    "referenceReaderDesireSeed": "WS_WRITE_READER_DESIRE_V1",
+    "stableSourceContract": "SOURCE_ID+MASTER_CONTENT_ID+INPUT_HASH+REVISION",
+    "storyboardBeats": [
+      "REAL_READER_QUESTION",
+      "VISIBLE_SCENE",
+      "TESTED_CONTRADICTION",
+      "HISTORY_CONTEXT_AND_MULTI_POV",
+      "EVIDENCE_AND_COUNTEREVIDENCE",
+      "COST_CHOICE_SMALL_APPLICATION",
+      "OPEN_ENDING_READER_QUESTION"
+    ],
+    "originalT1Text": "IMMUTABLE_APPROVED_MASTER",
+    "readerRendering": "PRESENTATION_ONLY_NO_GEMINI_REGENERATION",
+    "biblespecific": "PRESERVE_ORIGINAL_7_PLUS_1_DEVOTIONAL_ONLY",
+    "autoPublish": false,
+    "autoPromoteApproved": false,
+    "newTriggerAllowed": false,
+    "runtimeStatus": "SPEC_ONLY_BOUND_APPS_SCRIPT_ACK_PENDING"
+  }
 }
