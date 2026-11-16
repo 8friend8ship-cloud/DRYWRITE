@@ -14,7 +14,7 @@ interface HomeViewProps {
 
 const Header: React.FC<{ onMenuClick: () => void }> = ({ onMenuClick }) => (
     <header className="p-4 bg-black flex justify-between items-center">
-        <h1 className="text-white text-2xl font-bold tracking-tighter font-serif">DryWriter</h1>
+        <h1 className="text-white text-2xl font-bold tracking-tighter font-serif">굳웨이 라이트</h1>
          <div className="flex items-center space-x-4">
             <button onClick={onMenuClick} aria-label="전체 글 메뉴 열기" className="rounded p-2 hover:bg-zinc-800 focus:outline-none focus:ring-2 focus:ring-white">
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-white" fill="none" viewBox="0 0 24" stroke="currentColor">
