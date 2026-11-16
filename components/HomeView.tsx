@@ -37,7 +37,7 @@ const ArticleCard: React.FC<{ article: RenderedArticle; onSelect: () => void; }>
         </div>
         <div className="p-4 bg-zinc-900">
             <h3 className="text-lg font-bold text-white leading-tight group-hover:text-gray-300">{article.title}</h3>
-            <p className="text-xs text-gray-500 mt-2">{article.date}</p>
+            <p className="text-xs text-gray-400 mt-2">{article.date}</p>
         </div>
     </button>
 );
