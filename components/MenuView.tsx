@@ -21,7 +21,9 @@ export const MenuView: React.FC<MenuViewProps> = ({ articles, onSelectArticle, o
                 return;
             }
             if (event.key !== 'Tab') return;
-            const buttons = Array.from(panelRef.current?.querySelectorAll<HTMLButtonElement>('button:not([disabled])') || []);
+            const buttons: HTMLButtonElement[] = panelRef.current
+                ? Array.from(panelRef.current.querySelectorAll<HTMLButtonElement>('button:not([disabled])'))
+                : [];
             if (!buttons.length) return;
             if (event.shiftKey && document.activeElement === buttons[0]) {
                 event.preventDefault();
