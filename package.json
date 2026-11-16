@@ -10,7 +10,8 @@
     "typecheck": "tsc --noEmit",
     "lint": "eslint .",
     "test:archive": "node --test tests/archive-pagination.test.mjs",
-    "verify": "npm run test:archive && npm run lint && npm run typecheck && npm run build",
+    "test:keep": "node --test tests/keep-review-gate.test.mjs",
+    "verify": "npm run test:archive && npm run test:keep && npm run lint && npm run typecheck && npm run build",
     "preview": "vite preview"
   },
   "dependencies": {
