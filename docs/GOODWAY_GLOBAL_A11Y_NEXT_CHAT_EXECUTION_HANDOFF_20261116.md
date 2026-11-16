@@ -246,3 +246,35 @@ LAST_GOOD: 기존 24/24 테스트+lint/typecheck/build, 격리 Chrome 카드날�
 ```
 
 [END GOODWAY_GLOBAL_A11Y_A15_NEXT_CHAT_HANDOFF_20261116]
+
+## 12. [GOODWAY_GLOBAL_A11Y_A16_EXECUTION_READBACK_20261116] — A15 이후 실제 P0→P5 재개 검수 (2026-11-16 KST 16:16~)
+
+**계보/보호:** DUAL_EYE_MULTI_BRAIN_BRIDGE_V1 / GOODWHY_SION_RIGHT_RELATIONSHIP_PURPOSE_V1_20261116, 운영 homedesigntaedi@gmail.com, PC BOOK-1HE2THGKRA, 기존 브랜치 fix/goodway-write-archive-pagination-20261116, PR #19 OPEN/DRAFT/NOT_MERGED. 새 PACK/PROJECT/NODE/Trigger/PR 생성, 외부 모델·미승인 원문/마이크 데이터 전송, 배포/병합/음성 렌더 **0건**.
+
+### P0 신규 READBACK — PASS(자료·상태 검증에 한함)
+- Google Drive+GitHub 실제 프로필 이메일 `homedesigntaedi@gmail.com` 일치. Remote Desktop Commander 소유 노트북 BOOK-1HE2THGKRA **ONLINE**.
+- 본 인계문 A15 11번 마지막 섹션, 중앙 운영헌장, 통합 히스토리, 건조한 작가 전자책, AI 앱개발 보호 작업복사본 **조회 완료**. WRITER `23_WRITER_QA_RULES!A18:H18`: `GWQ-A11Y-20261116`, `BLOCK`, `DRAFT_SPEC_ONLY_RUNTIME_HOLD` 유지. 함수계약 `61_BACKEND_FUNCTION_CONTRACT!V35,V36,V44` 값/메타 재조회: 이전 DryWrite/Writer/VTube 운영 지시 그대로이며 대상 셀에 새 음성 런타임 PASS나 트리거 승인 없음. 이번 단계에서 시트 값·Notes·Script 변경 **0건**.
+- GitHub PR #19 HEAD=`a0979cdc1bb0a07a1bed6be772831c1ab5e4d98a`(본 문서 append **전**), DRAFT/open/unmerged. Vercel 기존 Preview `dpl_EgEQ3EmP21BrAvKitvjCasnBoJvW`, https://drywrite-preview-repair-baseline-q6srp7s6v.vercel.app, state READY, target=null, Git SHA=`7793a4a9b8b71c9c28736007427a2ca309327046`(기존 날짜색 수정 포함). PR 최신 HEAD와 배포 SHA 불일치는 A15 문서 이후 무재배포 상태와 구별해 기록. Prod 승격 증거 아님.
+- **LAST_GOOD 재사용만:** 이전 npm verify 24/24 + lint/tsc/Vite, 로컬 가상글 날짜색 대비 3.66→6.98:1, 격리 Chrome 13/13 ×2, 실제 Preview UIA 5/5, 200% 확대·원복 6/6. **이번 실행에서는 재시험하지 않음.**
+
+### P1 신규 Chrome Preview 검수 — 부분 PASS / 실제 날짜 색 HOLD
+- 독립 `Chrome --headless=new --dump-dom`으로 동일 Preview 직접 요청 시 `Login · Vercel` 인증 콘텐츠만 반환(Exit 0이 앱 접근 PASS는 아님). 인증 우회/공유 링크 생성 없음.
+- 사용자 로그인 상태 Windows Chrome의 UIA **읽기 전용** 관찰(2026-11-16T07:16:13Z): 대상 Preview 창 1개, 앱 제목 감지, 검색 입력 1, 전체글 메뉴 트리거 1, 본문 건너뛰기 링크 1; 카드 날짜 UIA 텍스트 노드 0. 공개 승인 기사 개수와 `PUBLIC_CONTENT_ID`는 이 조사로 확정되지 않았으며 UIA card/date 텍스트 부재와 백엔드 0건을 동일시하지 않음. 실제 카드 날짜 요소 `getComputedStyle` fg/bg/font/ratio, 기사 페이지 320/390/200% 및 Narrator/NVDA 실청취 **HOLD**. 이전 localhost synthetic CSS 대비 6.98:1을 최신 Preview 직접 실측으로 승격하지 않음.
+- 새 검증 파일(기존 보호 영수증 덮어쓰기 없이): `%TEMP%\\GOODWAY_A11Y_DEVICE_RECEIPTS_20261116\\goodway_a16_auth_preview_uia_device_status_receipt.json`; SHA256 `6b4259da8aae7f4698a97e0fb28877e54d0190156cfee8ae88ff8c31ec0cbb8d`. 사용자 기기 화면 내용·고객 원고·시크릿은 수집하지 않음.
+
+### P2 Android — HOLD_PHYSICAL_DEVICE_UNAVAILABLE
+- 노트북 도구 `adb` 없음, ANDROID_HOME/ANDROID_SDK_ROOT 미설정. Windows PnP WPD 후보는 `T7 Shield`와 `E:\\` 저장장치, `GalaxyBookExperience`는 Windows 소프트웨어 구성요소; 테스트 스마트폰/ADB 승인 연결의 근거 없음. TalkBack / Voice Access / Android Chrome 320·390 / 페이지 번역 미실행.
+- 신규 두 번째 영수증 `goodway_a16_android_pnp_receipt.json` SHA256 `9d7c15acbaf96a3b3a1e371a429b7290e822e3bce88b51ec6137f89f3655e0b1`. 사용자 실기기 검수: Chrome ⋮→번역, TalkBack 제목→H1/H2→본문→상태 안내 읽기 순서, Voice Access 메뉴/검색/닫기, 확대 reflow/포커스, 마이크 기본 OFF를 각각 휴대폰 조작 후만 기록.
+
+### P3 공개 글 다국어 읽기 — HOLD
+- 이번 실행에서 권리·공개 승인이 실제 확인된 `PUBLIC_CONTENT_ID + sourceRevision` 없음. 직접 Chrome 페이지 번역/설치된 on-device Translator 모델/실제 WebSpeech 출력은 각각 별도 검증 항목이며, 이전 `downloadable` 10쌍은 설치·성공 PASS가 아님. 승인 없는 원고/음성/마이크 외부 전송 0.
+
+### P4 시온 VoicePack/VTube JSON/MCP — 계약 소스 READBACK PASS, Provider 실렌더 HOLD
+- GitHub `DRYWRITE/services/globalVoiceContract.mjs` metadata-only, `mcpAdapterStatus=NOT_WIRED`, SION_LOCAL_VOICE/GEMINI_LIVE 검수 차단 재확인. `V-tube/services/videoTemplateAutomationService.ts` LanguageCode `ko|en|ja`, `apps-script/VTubeVideoTemplateBridge_20260826.gs` 원문 dialogue JSON을 시트로 저장하는 `QUEUE_VIDEO_TEMPLATE_RENDER` 경로 확인. **GOODWAY metadata-only를 VTUBE 원문 저장 큐에 직접 연결 금지**. 성우/시온 음색 권리·개인정보 승인·비용·두 독립 Provider ACK 미확보 ⇒ `VOICE_RENDER_HOLD`, `PRODUCTION_HOLD`, `AUTO_PUBLISH=false`.
+
+### P5 중복 방지 / NEXT
+- 실제 새 증거는 P0 상태, P1 Chrome 로그인/한정 UIA, P2 PnP 분류, P3/P4 계약 검수뿐. 새 배포·신규 테스트 통과·Android/번역/렌더 성공으로 둔갑 금지.
+- FIRST_UNFINISHED: 기존 로그인 Chrome에서 **실제 공개 카드**가 제공될 때 날짜 computed fg/bg/font + 4.5:1 측정 → 홈·승인글 320/390·Zoom200%·Tab/Enter/Esc·focus·실 Narrator/NVDA → 실 Android TalkBack/Voice Access → 공개 승인 `PUBLIC_CONTENT_ID/sourceRevision`의 국가별 페이지번역/로컬모델/TTS 구분 QA → 시온 권리·기존 MCP 별도 provider ACK ×2 → 창조자 글별 최종 승인. 그 전 PR #19 DRAFT/미병합, Production·음성·자동발행 HOLD.
+- 본 절을 기존 GitHub 단일 인계문에만 append하며 이전 A11~A15/로컬 보호본/운영 master를 변경하지 않음.
+
+[END GOODWAY_GLOBAL_A11Y_A16_EXECUTION_READBACK_20261116]
