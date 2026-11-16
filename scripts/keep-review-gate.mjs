@@ -29,8 +29,12 @@ function textOf(note) {
 export function classifyKeepNote(note, fileIdentity = '') {
   if (!note || typeof note !== 'object' || Array.isArray(note)) throw new Error('INVALID_KEEP_NOTE');
   const body = textOf(note);
-  const digest = createHash('sha256').update(fileIdentity).update('\0').update(body).digest('hex');
+  // Note identity stays stable across body revisions when the Takeout source path is stable.
+  const sourceKey = typeof note.id === 'string' && note.id.trim()
+    ? note.id.trim() : (fileIdentity || body);
+  const digest = createHash('sha256').update('KEEP_SOURCE\0').update(sourceKey).digest('hex');
   const id = 'KEEP_' + digest.slice(0, 20);
+  const revisionHash = createHash('sha256').update(body).digest('hex');
   const flags = RULES.filter(([, pattern]) => pattern.test(body)).map(([name]) => name);
   if (!body) flags.push('EMPTY_NOTE');
   if (note.isTrashed) flags.push('TRASHED_NOTE');
@@ -40,11 +44,11 @@ export function classifyKeepNote(note, fileIdentity = '') {
   if (typeof note.title !== 'string' && typeof note.textContent !== 'string' && !Array.isArray(note.listContent)) flags.push('UNKNOWN_FORMAT');
   const uniqueFlags = [...new Set(flags)];
   if (uniqueFlags.length) {
-    return { contentId: id, origin: 'GOOGLE_KEEP_TAKEOUT', status: 'HOLD_SENSITIVE_NO_DRAFT', publicYn: 'N',
+    return { contentId: id, revisionHash, origin: 'GOOGLE_KEEP_TAKEOUT', status: 'HOLD_SENSITIVE_NO_DRAFT', publicYn: 'N',
       approvalStatus: 'NOT_REQUESTED', flags: uniqueFlags };
   }
   return {
-    contentId: id, origin: 'GOOGLE_KEEP_TAKEOUT', status: 'HOLD_CREATOR_REVIEW', publicYn: 'N',
+    contentId: id, revisionHash, origin: 'GOOGLE_KEEP_TAKEOUT', status: 'HOLD_CREATOR_REVIEW', publicYn: 'N',
     approvalStatus: 'NOT_REQUESTED', title: note.title?.trim() || '제목 없는 메모',
     rawText: body, flags: [],
     reviewRequirements: ['SOURCE_RIGHTS', 'PERSONAL_CONTEXT', 'FACT_CHECK', 'BON_SEOMGIM_8',
