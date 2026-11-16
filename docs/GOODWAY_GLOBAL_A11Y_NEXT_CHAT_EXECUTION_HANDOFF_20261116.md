@@ -93,3 +93,22 @@ BOOK-1HE2THGKRA: Chrome `157.0.8103.51`, Python `3.14.3`. `scripts/open_goodway_
 > 기존 `DUAL_EYE_MULTI_BRAIN_BRIDGE_V1` 계보, 계정 `homedesigntaedi@gmail.com`, 노트북 `BOOK-1HE2THGKRA`, 기존 DRYWRITE DRAFT PR #19와 GOODWAY_GLOBAL_VOICE_JSON_MCP_V1_20261116을 유지해. 먼저 이 GitHub 인계문과 중앙헌장·건조한 작가 아카이브 전자책·앱개발 전자책·WRITER 23 QA와 61 함수계약을 실제 READBACK해. LAST_GOOD=기능 소스 `eb784b5d6f9f` 22/22·lint/tsc/build PASS + Python Chrome 열림/JSONL 실행영수증 PASS + 접근성 시트 계약 메모 READBACK. FIRST_UNFINISHED=권한 있는 Chrome에서 Vercel Preview 접근성 UI/화면낭독기·키보드·언어별 번역 실제 테스트 → Android Chrome/TalkBack·Voice Access → 기존 Vtube/시온 음성팩·JSON/MCP 실제 승인된 연결 x2. 새 PACK/PROJECT/NODE/Trigger·유료 AI·계정 키 외부 전송·자동발행/운영 배포 금지. 모든 단계에서 실행 영수증/출처·권리·바른관계5/본섬김8/하몬서클 R1/R2/R3를 구분하고, 통과한 범위만 중앙기록/전자책에 append+READBACK해.
 
 **FINAL:** `PASS_SOURCE_22_TESTS_AND_CHROME_LAUNCH_LOG__HOLD_BROWSER_USER_E2E_VOICE_PROVIDERS_AND_PRODUCTION`
+
+
+## 6. 후속 실제 실행 영수증 — GOODWAY_A11Y_BROWSER_HARDWARE_GATE_RECEIPT_20261116_051930Z
+
+**현시각 기준:** 2026-11-16 14:19:30 KST / 기존 `DUAL_EYE_MULTI_BRAIN_BRIDGE_V1` / 기존 PR #19 DRAFT 유지.
+
+- Google Drive 연결 프로필 `homedesigntaedi@gmail.com`과 GitHub `8friend8ship-cloud` 확인. 기존 중앙 최상위 운영헌장·중앙 통합 히스토리·건조한 작가 전자책·AI 앱개발 전자책·WRITER 23 A18:H18·61 V35,V36,V44 READBACK 완료.
+- 이번 검증 직전 PR HEAD `ebc72b6e822b34e45ef1c94abbad6042c251a2ae`, 기존 실제 검증 코드 `eb784b5d6f9f85effaf167b92faab8b4187c2d4a`와의 GitHub 비교는 문서만 2개 추가. 기존 22/22/lint/tsc/build 성공 영수증은 이전 결과 재조회, 이번 새 실기기 테스트로 계산하지 않음.
+- Vercel Preview `dpl_BigxFJEvKCn18kyqXiPVGPNrncJB` `READY`, 배포 SHA `482f6bd56765a3120ac9023a048515005742b406`. 승인된 Windows Chrome에서 보호 URL 실제 열기 → **`로그인 - Vercel - Chrome` 화면**; 인증 뒤 앱 실제 버튼/Tab/Esc/ARIA/확대/스크린리더 검수는 차단. 로그인 보호 우회·Share URL 생성·Production 변경 없음.
+- 소유 Windows Chrome 157의 별도 격리 프로필에서 localhost 가상 테스트 페이지와 Chrome DevTools Protocol로 **실제 브라우저 API 메타 수집 PASS**. `speechSynthesis`, `SpeechRecognition`, `Translator.availability` 존재; `navigator.language=ko-KR`. 음성 20개 중 `localService=true` 1개(ko-KR), 나머지 19개는 외부 처리 가능성이 있으므로 기본 동의 없이 사용 금지. `ko→en/ja/es/zh-Hans/zh-Hant/fr/de/pt/vi/th` 10쌍 전부 `downloadable` — 번역/음성 출력 성공이 아닌 **언어 모델 다운로드 가능** 상태. 모델 다운로드, 원고/마이크/음원 전송, TTS 발화, 유료 AI 호출 없음. 현장 JSON 영수증: `%TEMP%\GOODWAY_A11Y_DEVICE_RECEIPTS_20261116\goodway_device_capability_cdp_receipt.json`.
+- 노트북 NVDA 기본 경로에서는 실행파일 미발견, Narrator 프로세스 미실행, ADB 실행 도구 없음. 따라서 Android Chrome·TalkBack·Voice Access·NVDA 실제 사용자 접근성·WCAG2.2 AA **HOLD**. 이 PC의 Chrome headless 런타임 수치를 다른 나라/기기 실측으로 일반화 금지.
+- V-tube `services/videoTemplateAutomationService.ts` (`fa82babed9af0d5229442249967f2a5bb69c3c37`)의 LanguageCode는 `ko/en/ja`만. 기존 `apps-script/VTubeVideoTemplateBridge_20260826.gs` (`57a656052ff7e6d9afcaab4e6f7e33929e86a90e`) 영상 큐는 `dialogue` 원문과 `voicePack`을 함께 시트에 저장하는 구조라 **GOODWAY metadata-only JSON을 승인된 순수 음성 backend ACK로 간주하거나 직접 연결하지 말 것**. 기존 Apps Script 트리거를 만드는 함수도 호출 금지. 시온 실제 사용권·Gemini Live 무료 쿼터/단기 토큰·공개 글 ID/revision·독립 Provider ACK x2는 여전히 HOLD.
+- 실행 영수증은 기존 중앙 운영헌장·중앙 통합 히스토리·건조한 작가 전자책·AI 앱개발 전자책 4곳에 `[GOODWAY_A11Y_BROWSER_HARDWARE_GATE_RECEIPT_20261116_051930Z]`로 **append + 실제 READBACK 4/4 PASS**, 기존 원고/WRITER 런타임/61 함수계약·물리 트리거 불변.
+
+**변경 후 LAST_GOOD:** 원래 22/22+브릿지 영수증 유지 + 실제 소유 PC Chrome 157 기능 메타 PASS + Vercel SSO 차단 확인 + 중앙기록/전자책 4/4 저장/재조회.
+
+**변경 후 FIRST_UNFINISHED:** 권한 있는 Chrome에서 정식 Preview Vercel 로그인 → 실제 앱 내부 키보드/스크린리더/모바일/번역/음성 사용자 체험 QA → Android Chrome·TalkBack·Voice Access 실기기 → 실제 승인 공개 원고 권리/국가별 품질 → 기존 시온/VTUBE 음성 백엔드 신규 트리거 없이 안전한 메타 어댑터와 x2 실 ACK → 창조자 문안·음색·글별 최종 승인. 그 전 PR#19 DRAFT 유지, Production/자동 발행/미승인 음성 렌더 **HOLD**.
+
+[END GOODWAY_A11Y_BROWSER_HARDWARE_GATE_RECEIPT_20261116_051930Z]
