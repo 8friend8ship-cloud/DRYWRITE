@@ -15,6 +15,13 @@ test('ordinary Keep note still requires human publication approval', () => {
   assert.ok(r.reviewRequirements.includes('CREATOR_EXPLICIT_APPROVAL'));
 });
 
+test('Keep note ID remains stable across text revisions in the same source file', () => {
+  const a = classifyKeepNote(fixture('오늘 주방을 생각했습니다.'), 'same-note.json');
+  const b = classifyKeepNote(fixture('오늘 주방을 다시 생각했습니다.'), 'same-note.json');
+  assert.equal(a.contentId, b.contentId);
+  assert.notEqual(a.revisionHash, b.revisionHash);
+});
+
 test('API keys, passwords, and secret links never enter draft body', () => {
   const inputs = ['sk-proj-1234567890abcdefghij', 'OPENAI_API_KEY=example', '비밀번호 12345',
     'https://script.google.com/macros/s/ABCD/exec', 'client_secret: abc123'];
