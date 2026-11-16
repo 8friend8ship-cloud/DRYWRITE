@@ -17,6 +17,15 @@ export default async function handler(req, res) {
   upstreamUrl.searchParams.set('action', action);
   if (action === 'LIST_CONTENT') {
     upstreamUrl.searchParams.set('pageSize', String(req.query?.pageSize || '100'));
+    // Forward only the bounded opaque cursor; keep upstream public approval filtering.
+    const pageToken = req.query?.pageToken;
+    if (pageToken !== undefined) {
+      if (typeof pageToken !== 'string' || !pageToken || pageToken.length > 4096) {
+        res.status(400).json({ ok: false, error: { code: 'INVALID_PAGE_TOKEN' } });
+        return;
+      }
+      upstreamUrl.searchParams.set('pageToken', pageToken);
+    }
   }
   if (action === 'GET_CONTENT') {
     upstreamUrl.searchParams.set('contentId', String(req.query?.contentId || ''));

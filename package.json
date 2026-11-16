@@ -9,8 +9,12 @@
     "build": "vite build",
     "typecheck": "tsc --noEmit",
     "lint": "eslint .",
-    "verify": "npm run lint && npm run typecheck && npm run build",
-    "preview": "vite preview"
+    "test:archive": "node --test tests/archive-pagination.test.mjs",
+    "test:keep": "node --test tests/keep-review-gate.test.mjs",
+    "verify": "npm run test:archive && npm run test:keep && npm run test:storyboard && npm run test:accessibility && npm run lint && npm run typecheck && npm run build",
+    "preview": "vite preview",
+    "test:storyboard": "node --test tests/goodway-storyboard-gate.test.mjs",
+    "test:accessibility": "node --test tests/global-voice-contract.test.mjs"
   },
   "dependencies": {
     "react": "^19.2.4",

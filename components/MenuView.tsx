@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import type { RenderedArticle } from '../types';
 
 interface MenuViewProps {
@@ -9,10 +9,41 @@ interface MenuViewProps {
 }
 
 export const MenuView: React.FC<MenuViewProps> = ({ articles, onSelectArticle, onClose }) => {
+    const panelRef = useRef<HTMLDivElement>(null);
+    const closeRef = useRef<HTMLButtonElement>(null);
+    useEffect(() => {
+        const previous = document.activeElement instanceof HTMLElement ? document.activeElement : null;
+        closeRef.current?.focus();
+        const keyHandler = (event: KeyboardEvent) => {
+            if (event.key === 'Escape') {
+                event.preventDefault();
+                onClose();
+                return;
+            }
+            if (event.key !== 'Tab') return;
+            const buttons: HTMLButtonElement[] = panelRef.current
+                ? Array.from(panelRef.current.querySelectorAll<HTMLButtonElement>('button:not([disabled])'))
+                : [];
+            if (!buttons.length) return;
+            if (event.shiftKey && document.activeElement === buttons[0]) {
+                event.preventDefault();
+                buttons[buttons.length - 1].focus();
+            } else if (!event.shiftKey && document.activeElement === buttons[buttons.length - 1]) {
+                event.preventDefault();
+                buttons[0].focus();
+            }
+        };
+        document.addEventListener('keydown', keyHandler);
+        return () => {
+            document.removeEventListener('keydown', keyHandler);
+            previous?.focus();
+        };
+    }, [onClose]);
     return (
         <div 
             className="fixed inset-0 z-40"
             aria-modal="true"
+            aria-labelledby="goodway-menu-heading"
             role="dialog"
         >
             {/* Overlay */}
@@ -24,10 +55,10 @@ export const MenuView: React.FC<MenuViewProps> = ({ articles, onSelectArticle, o
             />
 
             {/* Menu Panel */}
-            <div className="fixed top-0 right-0 bottom-0 w-full max-w-xs bg-zinc-900 shadow-xl z-50 flex flex-col animate-slide-in-right">
+            <div ref={panelRef} className="fixed top-0 right-0 bottom-0 w-full max-w-xs bg-zinc-900 shadow-xl z-50 flex flex-col animate-slide-in-right">
                 <div className="flex justify-between items-center p-4 border-b border-zinc-700">
-                    <h2 className="text-lg font-bold text-white">All Notes</h2>
-                    <button onClick={onClose} aria-label="메뉴 닫기" className="text-gray-400 hover:text-white">
+                    <h2 id="goodway-menu-heading" className="text-lg font-bold text-white">공개 글 목록</h2>
+                    <button ref={closeRef} type="button" onClick={onClose} aria-label="메뉴 닫기" className="text-gray-400 hover:text-white">
                         <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
                         </svg>

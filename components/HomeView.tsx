@@ -3,6 +3,7 @@ import React from 'react';
 import type { ContentListResult, RenderedArticle } from '../types';
 
 interface HomeViewProps {
+    initialLoading: boolean;
     articles: RenderedArticle[];
     onSelectArticle: (id: string) => void;
     searchQuery: string;
@@ -10,11 +11,16 @@ interface HomeViewProps {
     onMenuClick: () => void;
     dataSource: ContentListResult['source'];
     integrationStatus: ContentListResult['integrationStatus'];
+    loadedCount: number;
+    hasMore: boolean;
+    loadingMore: boolean;
+    loadError: string | null;
+    onLoadMore: () => void;
 }
 
 const Header: React.FC<{ onMenuClick: () => void }> = ({ onMenuClick }) => (
     <header className="p-4 bg-black flex justify-between items-center">
-        <h1 className="text-white text-2xl font-bold tracking-tighter font-serif">DryWriter</h1>
+        <h1 className="text-white text-2xl font-bold tracking-tighter font-serif">굳웨이 라이트</h1>
          <div className="flex items-center space-x-4">
             <button onClick={onMenuClick} aria-label="전체 글 메뉴 열기" className="rounded p-2 hover:bg-zinc-800 focus:outline-none focus:ring-2 focus:ring-white">
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-white" fill="none" viewBox="0 0 24" stroke="currentColor">
@@ -32,26 +38,46 @@ const ArticleCard: React.FC<{ article: RenderedArticle; onSelect: () => void; }>
         </div>
         <div className="p-4 bg-zinc-900">
             <h3 className="text-lg font-bold text-white leading-tight group-hover:text-gray-300">{article.title}</h3>
-            <p className="text-xs text-gray-500 mt-2">{article.date}</p>
+            <p className="text-xs text-gray-400 mt-2">{article.date}</p>
         </div>
     </button>
 );
 
-export const HomeView: React.FC<HomeViewProps> = ({ articles, onSelectArticle, searchQuery, setSearchQuery, onMenuClick, dataSource, integrationStatus }) => {
+export const HomeView: React.FC<HomeViewProps> = ({ initialLoading, articles, onSelectArticle, searchQuery, setSearchQuery, onMenuClick, dataSource, integrationStatus, loadedCount, hasMore, loadingMore, loadError, onLoadMore }) => {
     return (
         <div className="bg-black min-h-screen">
             <Header onMenuClick={onMenuClick}/>
-            <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            <main id="main-content" tabIndex={-1} className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
                 <div className="mb-6 flex flex-wrap items-center gap-2 text-xs text-zinc-400" aria-label="데이터 연결 상태">
-                    <span className="rounded-full border border-zinc-700 px-3 py-1">Data: {dataSource.toUpperCase()}</span>
-                    {integrationStatus === 'WAITING_BACKEND_CONTRACT' && (
-                        <span className="rounded-full border border-amber-700/70 bg-amber-950/30 px-3 py-1 text-amber-300">Preview fallback · backend contract pending</span>
+                    {initialLoading ? (
+                        <span role="status" className="rounded-full border border-zinc-700 px-3 py-1">공개 글 연결 확인 중</span>
+                    ) : (
+                        <span className="rounded-full border border-zinc-700 px-3 py-1">
+                            {loadError ? '글 조회 오류' : dataSource === 'server' ? '공개 글 서버 연결됨' : '로컬 미리보기 자료'}
+                        </span>
+                    )}
+                    {!initialLoading && !loadError && integrationStatus === 'WAITING_BACKEND_CONTRACT' && (
+                        <span className="rounded-full border border-amber-700/70 bg-amber-950/30 px-3 py-1 text-amber-300">공개 글 서버 연결 전 · 미리보기 자료</span>
                     )}
                 </div>
+                {!initialLoading && !loadError && dataSource === 'server' && loadedCount === 0 && (
+                    <section role="status" aria-live="polite" className="mb-8 rounded-lg border border-zinc-700 bg-zinc-900 p-5">
+                        <h2 className="text-lg font-semibold text-white">아직 공개 승인된 글이 없습니다.</h2>
+                        <p className="mt-2 text-sm leading-relaxed text-zinc-300">
+                            내부 검수 중인 원고는 최종 공개 승인 전이므로 이곳에 표시하지 않습니다.
+                        </p>
+                    </section>
+                )}
+                {loadError && <p role="alert" className="mb-8 rounded border border-amber-700 p-4 text-amber-300">{loadError}</p>}
                 <div className="relative mb-8">
-                    <input 
-                        type="text"
-                        placeholder="검색어를 입력하세요."
+                    <label htmlFor="goodway-search" className="mb-2 block text-sm font-semibold text-white">
+                      공개 글 검색
+                    </label>
+                    <input
+                        id="goodway-search"
+                        type="search"
+                        aria-describedby="goodway-search-scope"
+                        placeholder="불러온 글에서 검색하세요."
                         value={searchQuery}
                         onChange={(e) => setSearchQuery(e.target.value)}
                         className="w-full p-4 pl-12 bg-zinc-900 text-white border border-zinc-700 rounded-md focus:outline-none focus:ring-2 focus:ring-zinc-500"
@@ -68,7 +94,21 @@ export const HomeView: React.FC<HomeViewProps> = ({ articles, onSelectArticle, s
                         <ArticleCard key={article.id} article={article} onSelect={() => onSelectArticle(article.id)} />
                     ))}
                 </div>
-                {articles.length === 0 && <p className="py-16 text-center text-zinc-400">검색 결과가 없습니다.</p>}
+                {!initialLoading && !loadError && loadedCount > 0 && articles.length === 0 && (
+                    <p className="py-16 text-center text-zinc-400">검색 결과가 없습니다.</p>
+                )}
+                <div id="goodway-search-scope" className="mt-10 text-center text-sm text-zinc-400" aria-live="polite">
+                    {initialLoading ? '공개 글 목록을 불러오는 중입니다.' : '현재 불러온 공개 글 ' + loadedCount + '건에서 검색합니다.'}
+                    {hasMore && ' 전체 승인 글을 탐색하려면 더 불러오기를 누르세요.'}
+                </div>
+                {hasMore && (
+                    <div className="mt-6 flex justify-center">
+                        <button type="button" onClick={onLoadMore} disabled={loadingMore}
+                          className="rounded border border-zinc-600 px-6 py-3 text-white hover:bg-zinc-800 disabled:opacity-60">
+                            {loadingMore ? '글 불러오는 중…' : '더 많은 글 불러오기'}
+                        </button>
+                    </div>
+                )}
             </main>
              <style>{`
                 @keyframes fade-in {

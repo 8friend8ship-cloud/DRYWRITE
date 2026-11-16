@@ -4,13 +4,15 @@ import { readContentCache, writeContentCache } from './contentCache';
 import type { ContentListResult, ContentRecord } from '../types';
 
 export interface ContentRepository {
-  listContent(): Promise<ContentListResult>;
+  listContent(pageToken?: string | null): Promise<ContentListResult>;
   getContent(contentId: string): Promise<ContentRecord | null>;
   saveContent(record: ContentRecord): Promise<ContentRecord>;
 }
 
 export class SampleContentRepository implements ContentRepository {
-  async listContent(): Promise<ContentListResult> {
+  async listContent(pageToken?: string | null): Promise<ContentListResult> {
+    // Sample data are only an offline preview; never invent a second page.
+    if (pageToken) return { records: [], source: 'sample', integrationStatus: 'WAITING_BACKEND_CONTRACT', nextPageToken: null };
     const cached = readContentCache();
     if (cached?.length) {
       return { records: cached, source: 'cache', integrationStatus: 'WAITING_BACKEND_CONTRACT' };
@@ -32,10 +34,11 @@ export class SampleContentRepository implements ContentRepository {
 export class AppsScriptContentRepository implements ContentRepository {
   constructor(private readonly client: AppsScriptClient) {}
 
-  async listContent(): Promise<ContentListResult> {
-    const records = await this.client.listContent();
-    writeContentCache(records);
-    return { records, source: 'server', integrationStatus: 'CONNECTED' };
+  async listContent(pageToken?: string | null): Promise<ContentListResult> {
+    const page = await this.client.listContent(pageToken);
+    // Browser cache is a disposable first-page preview, not the canonical archive.
+    if (!pageToken) writeContentCache(page.records);
+    return { records: page.records, source: 'server', integrationStatus: 'CONNECTED', nextPageToken: page.nextPageToken };
   }
 
   getContent(contentId: string): Promise<ContentRecord | null> {

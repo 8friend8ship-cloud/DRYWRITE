@@ -1,7 +1,7 @@
 import type { ContentRecord } from '../types';
 
 export interface AppsScriptClient {
-  listContent(): Promise<ContentRecord[]>;
+  listContent(pageToken?: string | null): Promise<{ records: ContentRecord[]; nextPageToken: string | null }>;
   getContent(contentId: string): Promise<ContentRecord | null>;
   saveContent(record: ContentRecord): Promise<ContentRecord>;
 }
@@ -141,9 +141,15 @@ export function createAppsScriptClient(config: AppsScriptClientConfig): AppsScri
   };
 
   return {
-    async listContent() {
-      const envelope = await requestJson<ContentRecord[]>(getUrl('LIST_CONTENT', { pageSize: '100' }));
-      return Array.isArray(envelope.data) ? envelope.data : [];
+    async listContent(pageToken) {
+      const params: Record<string, string> = { pageSize: '100' };
+      if (pageToken) params.pageToken = pageToken;
+      const envelope = await requestJson<ContentRecord[]>(getUrl('LIST_CONTENT', params));
+      return {
+        records: Array.isArray(envelope.data) ? envelope.data : [],
+        nextPageToken: typeof envelope.nextPageToken === 'string' && envelope.nextPageToken
+          ? envelope.nextPageToken : null,
+      };
     },
 
     async getContent(contentId: string) {
