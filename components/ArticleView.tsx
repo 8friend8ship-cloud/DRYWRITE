@@ -16,7 +16,7 @@ const Header: React.FC<{ onBack: () => void; onMenuClick: () => void; }> = ({ on
              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
             </svg>
-            <h1 className="text-white text-2xl font-bold tracking-tighter font-serif">DryWriter</h1>
+            <h1 className="text-white text-2xl font-bold tracking-tighter font-serif">굳웨이 라이트</h1>
         </button>
         <div className="flex items-center space-x-4">
              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
