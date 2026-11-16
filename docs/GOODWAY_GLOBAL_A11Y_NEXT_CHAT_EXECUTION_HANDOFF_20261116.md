@@ -173,3 +173,18 @@ BOOK-1HE2THGKRA: Chrome `157.0.8103.51`, Python `3.14.3`. `scripts/open_goodway_
 **LAST_GOOD:** 기존 실제 Windows Preview UIA 5/5, 이번 실사이트 확대/복원6/6, 격리 Chrome 대비 미달 원인 3.66 및 보정 후 6.98·13/13x2, 전체 24/24+lint/tsc/build PASS, GitHub PR 소스 SHA READBACK. **FIRST_UNFINISHED:** 새 `b985...` Preview 배포 READY 확인 후 그 도메인의 실제 날짜 대비/200% 전체 페이지·사용자 스크린리더 확인; Android 스마트폰 실기기 연결 후 Chrome 번역+TalkBack/Voice Access; 승인 PUBLIC_CONTENT_ID/revision 국가별 실번역·기기 음성 출력·음질 평가; 기존 시온/VTUBE 적법한 보이스 서버 메타계약·실 Provider ACK x2; 창조자 원문·음색·공개/발행 승인. 그 전 `VOICE_RENDER_HOLD`, `PRODUCTION_HOLD`, `PR#19_DRAFT`.
 
 [END GOODWAY_A14_CHROME_ZOOM_CONTRAST_20261116]
+
+
+## 10. [GOODWAY_A14_PREVIEW_LIVE_READY_POSTPATCH_20261116] — 수정 코드 포함 Vercel Preview READY 및 실제 Chrome 최종 UIA
+
+**실측 일시:** 2026-11-16 15:47 KST. 직전 A14의 "새 대비보정 코드 Preview READY 미확인"은 **그 시점의 HOLD**였으며, 아래 Vercel 커밋·배포와 실제 Windows Chrome 진입 결과로 **해당 배포 상태에 한해 해소**함. 기존 branch / PR#19 DRAFT / main 보호 동일, 사용자 계정·기기 동일.
+
+1. Vercel get_deployment 직접 조회: `dpl_EgEQ3EmP21BrAvKitvjCasnBoJvW` = `https://drywrite-preview-repair-baseline-q6srp7s6v.vercel.app`, `state=READY`, `target=null`(Preview), GitHub branch `fix/goodway-write-archive-pagination-20261116`, commit `7793a4a9b8b71c9c28736007427a2ca309327046`. 해당 Git SHA는 기존 source 수정 `HomeView d183758cadc05ca22ad0c87c47e8e6c3a36df3d2` + test `b98594a424f549fde8e2d512f5ea59cade27f535`를 포함한 후속 기록 커밋.
+2. 일반 사용자 Windows Chrome으로 보호된 위 **실제 최신 Preview**를 열고 주소·앱 제목을 UI Automation으로 확인. 검색·메뉴·Enter 열기 후 닫기 포커스·Esc 복귀·본문 건너뛰기 접근성 레이블 등 **5/5 PASS**. JSON `%TEMP%\GOODWAY_A11Y_DEVICE_RECEIPTS_20261116\goodway_latest_preview_chrome_uia_receipt.json`; SHA256 `272AB46A101B047E40A196EABFD3DD30D80F5F975BDEF06F7D2305D3D598A472`.
+3. 동일 최신 Preview에서 Chrome 실제 페이지 확대 5단계, 검색 높이 **163→326px, 2.0배**, 검색·메뉴의 가로 경계, Enter/Esc·확대 5단계 원복 후 163px 복귀까지 **6/6 PASS**. JSON `goodway_latest_preview_zoom_200_receipt.json` SHA256 `FA351E25C036FDC5C3CA2AAA3C7696BCB2A9F9A17154F8DACC0F1EDAF069B1A6`. 브라우저 사용자 설정 원상복구 확인.
+4. 유의: 새 code SHA의 Vercel READY 및 UIA 동작은 확인됐지만, **실 Preview의 카드 날짜 픽셀 컬러/실낭독 재계측은 하지 않았음**. 대비율 **6.98:1**은 정확 동일 수정 코드의 격리 Chrome DOM/12px 날짜·부모 배경 `rgb(24,24,27)` 13/13 x2 실측에서만 확인. 실서비스 전체 WCAG 2.2 AA 인증, Android Chrome 번역·TalkBack·Voice Access, Windows NVDA 실제 낭독, 시온 음성권리/Provider ACK x2는 여전히 HOLD.
+5. 운영 main·Production 배포/자동 글 발행/유료 AI/모델 다운로드/원고·음성·마이크 전송/신규 팩·노드·물리 Trigger **모두 0**. 기존 DRAFT PR 상태 유지.
+
+**LAST_GOOD:** 24/24 테스트·lint/tsc/build + 로컬 Chrome 실대비 3.66→6.98 및 13/13x2 + 새 code 포함 Vercel Preview READY + 해당 최신 실제 Windows Chrome UIA5/5·확대6/6. **FIRST_UNFINISHED:** 실 Preview 실제 날짜 색상/리더 실제 낭독·전체 반응형/Android 실기기 다국어·TTS/시온 적법 음색과 Provider ACK x2·창조자 승인. 병합/자동발행/Production은 HOLD.
+
+[END GOODWAY_A14_PREVIEW_LIVE_READY_POSTPATCH_20261116]
