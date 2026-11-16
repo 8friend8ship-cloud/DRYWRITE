@@ -1,0 +1,79 @@
+{
+  "contractId": "DRYWRITE_WRITER_STORYBOARD_FRONT_PACKAGE_V1_20260904",
+  "version": "1.0",
+  "centralSheetId": "1C_CznU1Uo7dk-gKay3-oH8wFxutsGMlz27RSrbdVQwI",
+  "role": "reader_editor_library_style_feedback_front",
+  "generationOwner": "APP_WRITE",
+  "incomingPackage": {
+    "required": [
+      "contentId",
+      "appId",
+      "sourceLineage",
+      "styleSeedIds",
+      "firstTemplateId",
+      "storyboard",
+      "writerResultId",
+      "secondTemplateId",
+      "title",
+      "body",
+      "qaStatus"
+    ],
+    "optional": [
+      "summary",
+      "cta",
+      "personaId",
+      "writingForm",
+      "readerDesireSignals",
+      "mediaAssets",
+      "platformVariants",
+      "seriesState",
+      "rightsStatus"
+    ]
+  },
+  "libraryBehavior": {
+    "searchBy": [
+      "appId",
+      "writingForm",
+      "genre",
+      "styleSeedIds",
+      "firstTemplateId",
+      "topic",
+      "readerDesireSignals"
+    ],
+    "reuseFirst": true,
+    "editCreatesDelta": true,
+    "doesNotBecomeIndependentSourceOfTruth": true
+  },
+  "styleLearning": {
+    "collectVerifiedSignals": [
+      "reader_save",
+      "share",
+      "completion",
+      "click",
+      "inquiry",
+      "explicit_feedback",
+      "manual_edit_delta"
+    ],
+    "unknownMetrics": "UNKNOWN",
+    "writebackTargets": [
+      "WRITE_READER_DESIRE_SIGNAL_V1",
+      "WRITE_OWNED_OUTPUT_FEEDBACK_V1",
+      "SEED_WRITE_STYLE_TAXONOMY_V1",
+      "EVOLVE_WRITE_STYLE_STORYBOARD_FACTORY_20260904_001"
+    ]
+  },
+  "frontRules": {
+    "displayWriterStoryboardMetadata": true,
+    "preserveAppSecondTemplate": true,
+    "publicSaveIsAdminBoundary": true,
+    "authorizedDriveDirectWritebackPreserved": true,
+    "mediaOnlyAfterTextQa": true
+  },
+  "copyrightPolicy": {
+    "referenceOnly": true,
+    "noPassageCopy": true,
+    "noSignaturePhraseImitation": true,
+    "storeSourceUrlAndRights": true
+  },
+  "runtimeState": "CONTRACT_STAGED_EXISTING_FRONT_PATH_PRESERVED"
+}
