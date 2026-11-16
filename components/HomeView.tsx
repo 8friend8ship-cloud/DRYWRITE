@@ -3,6 +3,7 @@ import React from 'react';
 import type { ContentListResult, RenderedArticle } from '../types';
 
 interface HomeViewProps {
+    initialLoading: boolean;
     articles: RenderedArticle[];
     onSelectArticle: (id: string) => void;
     searchQuery: string;
@@ -42,17 +43,32 @@ const ArticleCard: React.FC<{ article: RenderedArticle; onSelect: () => void; }>
     </button>
 );
 
-export const HomeView: React.FC<HomeViewProps> = ({ articles, onSelectArticle, searchQuery, setSearchQuery, onMenuClick, dataSource, integrationStatus, loadedCount, hasMore, loadingMore, loadError, onLoadMore }) => {
+export const HomeView: React.FC<HomeViewProps> = ({ initialLoading, articles, onSelectArticle, searchQuery, setSearchQuery, onMenuClick, dataSource, integrationStatus, loadedCount, hasMore, loadingMore, loadError, onLoadMore }) => {
     return (
         <div className="bg-black min-h-screen">
             <Header onMenuClick={onMenuClick}/>
             <main id="main-content" tabIndex={-1} className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
                 <div className="mb-6 flex flex-wrap items-center gap-2 text-xs text-zinc-400" aria-label="데이터 연결 상태">
-                    <span className="rounded-full border border-zinc-700 px-3 py-1">Data: {dataSource.toUpperCase()}</span>
-                    {integrationStatus === 'WAITING_BACKEND_CONTRACT' && (
-                        <span className="rounded-full border border-amber-700/70 bg-amber-950/30 px-3 py-1 text-amber-300">Preview fallback · backend contract pending</span>
+                    {initialLoading ? (
+                        <span role="status" className="rounded-full border border-zinc-700 px-3 py-1">공개 글 연결 확인 중</span>
+                    ) : (
+                        <span className="rounded-full border border-zinc-700 px-3 py-1">
+                            {loadError ? '글 조회 오류' : dataSource === 'server' ? '공개 글 서버 연결됨' : '로컬 미리보기 자료'}
+                        </span>
+                    )}
+                    {!initialLoading && !loadError && integrationStatus === 'WAITING_BACKEND_CONTRACT' && (
+                        <span className="rounded-full border border-amber-700/70 bg-amber-950/30 px-3 py-1 text-amber-300">공개 글 서버 연결 전 · 미리보기 자료</span>
                     )}
                 </div>
+                {!initialLoading && !loadError && dataSource === 'server' && loadedCount === 0 && (
+                    <section role="status" aria-live="polite" className="mb-8 rounded-lg border border-zinc-700 bg-zinc-900 p-5">
+                        <h2 className="text-lg font-semibold text-white">아직 공개 승인된 글이 없습니다.</h2>
+                        <p className="mt-2 text-sm leading-relaxed text-zinc-300">
+                            내부 검수 중인 원고는 최종 공개 승인 전이므로 이곳에 표시하지 않습니다.
+                        </p>
+                    </section>
+                )}
+                {loadError && <p role="alert" className="mb-8 rounded border border-amber-700 p-4 text-amber-300">{loadError}</p>}
                 <div className="relative mb-8">
                     <label htmlFor="goodway-search" className="mb-2 block text-sm font-semibold text-white">
                       공개 글 검색
@@ -78,12 +94,13 @@ export const HomeView: React.FC<HomeViewProps> = ({ articles, onSelectArticle, s
                         <ArticleCard key={article.id} article={article} onSelect={() => onSelectArticle(article.id)} />
                     ))}
                 </div>
-                {articles.length === 0 && <p className="py-16 text-center text-zinc-400">검색 결과가 없습니다.</p>}
+                {!initialLoading && !loadError && loadedCount > 0 && articles.length === 0 && (
+                    <p className="py-16 text-center text-zinc-400">검색 결과가 없습니다.</p>
+                )}
                 <div id="goodway-search-scope" className="mt-10 text-center text-sm text-zinc-400" aria-live="polite">
-                    현재 불러온 글 {loadedCount}건에서 검색합니다.
+                    {initialLoading ? '공개 글 목록을 불러오는 중입니다.' : '현재 불러온 공개 글 ' + loadedCount + '건에서 검색합니다.'}
                     {hasMore && ' 전체 승인 글을 탐색하려면 더 불러오기를 누르세요.'}
                 </div>
-                {loadError && <p role="alert" className="mt-4 text-center text-amber-300">{loadError}</p>}
                 {hasMore && (
                     <div className="mt-6 flex justify-center">
                         <button type="button" onClick={onLoadMore} disabled={loadingMore}
