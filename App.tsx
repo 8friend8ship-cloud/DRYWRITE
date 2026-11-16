@@ -151,6 +151,8 @@ const App = () => {
     window.history.pushState({}, '', `${CONTENT_PATH_PREFIX}${encodeURIComponent(id)}`);
   }, []);
 
+  const closeMenu = useCallback(() => setIsMenuOpen(false), []);
+
   const goHome = useCallback(() => {
     setSelectedId(null);
     setView('home');
@@ -195,7 +197,7 @@ const App = () => {
       {isMenuOpen && (
         <MenuView
           articles={articles}
-          onClose={() => setIsMenuOpen(false)}
+          onClose={closeMenu}
           onSelectArticle={(id) => {
             selectArticle(id);
             setIsMenuOpen(false);
