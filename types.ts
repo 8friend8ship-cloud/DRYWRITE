@@ -52,4 +52,6 @@ export interface ContentListResult {
   records: ContentRecord[];
   source: 'server' | 'cache' | 'sample';
   integrationStatus: 'CONNECTED' | 'WAITING_BACKEND_CONTRACT';
+  /** Continuation provided by the public-read backend, not an approval flag. */
+  nextPageToken?: string | null;
 }
