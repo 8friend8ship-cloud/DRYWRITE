@@ -41,11 +41,33 @@ const App = () => {
     let active = true;
     contentRepository.listContent().then((result) => {
       if (!active) return;
-      setRecords(result.records);
+      setRecords((current) => {
+        const byId = new Map(current.map((record) => [record.contentId, record]));
+        result.records.forEach((record) => byId.set(record.contentId, record));
+        return [...byId.values()];
+      });
       setDataState({ source: result.source, integrationStatus: result.integrationStatus });
       setNextPageToken(result.nextPageToken ?? null);
     }).catch(() => {
       if (active) setLoadError('글 목록을 불러오지 못했습니다. 잠시 후 다시 시도해 주세요.');
+    });
+    return () => { active = false; };
+  }, []);
+
+  // Direct links must resolve approved records beyond the first 100 items.
+  // GET_CONTENT is filtered by the same server-side public approval gate.
+  useEffect(() => {
+    const routeContentId = readContentIdFromLocation();
+    if (!routeContentId) return;
+    let active = true;
+    contentRepository.getContent(routeContentId).then((record) => {
+      if (!active || !record) return;
+      setRecords((current) => current.some((item) => item.contentId === record.contentId)
+        ? current : [...current, record]);
+      setSelectedId(record.contentId);
+      setView('article');
+    }).catch(() => {
+      // Missing or unapproved records do not bypass the public-read gate.
     });
     return () => { active = false; };
   }, []);
