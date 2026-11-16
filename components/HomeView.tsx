@@ -46,7 +46,7 @@ export const HomeView: React.FC<HomeViewProps> = ({ articles, onSelectArticle, s
     return (
         <div className="bg-black min-h-screen">
             <Header onMenuClick={onMenuClick}/>
-            <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            <main id="main-content" tabIndex={-1} className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
                 <div className="mb-6 flex flex-wrap items-center gap-2 text-xs text-zinc-400" aria-label="데이터 연결 상태">
                     <span className="rounded-full border border-zinc-700 px-3 py-1">Data: {dataSource.toUpperCase()}</span>
                     {integrationStatus === 'WAITING_BACKEND_CONTRACT' && (
