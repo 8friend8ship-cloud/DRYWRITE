@@ -188,3 +188,61 @@ BOOK-1HE2THGKRA: Chrome `157.0.8103.51`, Python `3.14.3`. `scripts/open_goodway_
 **LAST_GOOD:** 24/24 테스트·lint/tsc/build + 로컬 Chrome 실대비 3.66→6.98 및 13/13x2 + 새 code 포함 Vercel Preview READY + 해당 최신 실제 Windows Chrome UIA5/5·확대6/6. **FIRST_UNFINISHED:** 실 Preview 실제 날짜 색상/리더 실제 낭독·전체 반응형/Android 실기기 다국어·TTS/시온 적법 음색과 Provider ACK x2·창조자 승인. 병합/자동발행/Production은 HOLD.
 
 [END GOODWAY_A14_PREVIEW_LIVE_READY_POSTPATCH_20261116]
+
+
+## 11. [GOODWAY_GLOBAL_A11Y_A15_NEXT_CHAT_HANDOFF_20261116] — 다음 채팅 재개용 정식 인계 / 상세 실행 우선순위
+
+**요청:** 다음 채팅에서 기존 `DUAL_EYE_MULTI_BRAIN_BRIDGE_V1` / `GOODWHY_SION_RIGHT_RELATIONSHIP_PURPOSE_V1_20261116` 계보를 **새 프로젝트/새 팩/새 트리거 없이 그대로 이어서 실제 구현·검수**. 기준 운영 계정 `homedesigntaedi@gmail.com`(이번 구글 Drive 연결 프로필 실제 동일 READBACK), 노트북 `BOOK-1HE2THGKRA`(사용자 승인된 기존 Remote Desktop 연결), GitHub `8friend8ship-cloud/DRYWRITE`, 기존 브랜치 `fix/goodway-write-archive-pagination-20261116`, 기존 `PR #19` **OPEN·DRAFT·NOT_MERGED**, base `main`. 현재 이 A15 기록 시작 전 GitHub 실제 HEAD `1cd2e16cce6e69f62fc33d3d6d18a16527aa212c` / 인계문 blob SHA `ad692f0e491f92d7b3bf940b7392b3fef8fccc1a`. **이 절의 저장 커밋 SHA는 별도 GitHub WRITE 결과로 다시 확인하여 중앙기록에 기록**. 다음 채팅 시작 때 반드시 최신 HEAD·배포 상태를 새로 READBACK하여 현재 값을 재동기화할 것.
+
+### A. 확인된 정본 자료 (변경 금지 / 시작 시 실제 READBACK)
+
+- GitHub 단일 정식 인계문: `docs/GOODWAY_GLOBAL_A11Y_NEXT_CHAT_EXECUTION_HANDOFF_20261116.md` — 위 브랜치, 기존 제목/원문·앞선 10개 실행 섹션 보호, 같은 문서에 append-only.
+- 중앙 최상위 운영헌장: `https://docs.google.com/document/d/1N6B96SpMM7l990EbzR9Md5RmHdC5wGSRxu3ClxnKZog/edit`.
+- 중앙 통합 히스토리: `https://docs.google.com/document/d/1LRwCSG5BFoORw82-xyjsemRjWs2MFIbsqzE_icD3Eqo/edit`.
+- 건조한 작가/글쓰기 전자책: `https://docs.google.com/document/d/11PuHgK4uCO1L3BzEntn4O48ktMwLlnSRD5SNLNBLCzk/edit`.
+- AI 앱개발 전자책 **보호 작업복사본**: `https://docs.google.com/document/d/1G3lpvsGrpRJemIy66L6CxBWbm1RmeuMF07eU1v0wXPA/edit`; 원본 도서 덮어쓰기 금지.
+- 기존 WRITER 23행 `23_WRITER_QA_RULES!A18:H18` 스프레드시트 `1SI-MQC7drEsxug5_mveiH7iXE2Yw1PzYRQlES8Az7nk`, 기존 `GWQ-A11Y-20261116`의 `DRAFT_SPEC_ONLY_RUNTIME_HOLD` 상태를 오인 없이 READBACK. 기존 함수 계약 `61_BACKEND_FUNCTION_CONTRACT!V35,V36,V44` 스프레드시트 `1M1rF2IeSDgwpvWuDZC6fSmLFwYpceQCtPBMs_XZJ7xo`의 `FACTORY_DRYWRITE/WRITE/VTUBE` 영향 확인. 이전 문서 외 현재 런타임 QA 승인 또는 물리 트리거 업데이트 증빙 없음. 임의 PASS 수정 금지.
+- 기존 보호된 로컬 테스트 영수증 경로: `%TEMP%\GOODWAY_A11Y_DEVICE_RECEIPTS_20261116`; 기존 격리 코드 `%TEMP%\GOODWAY_A11Y_REDUCED_MOTION_CANDIDATE_20261116`, 원본 검증 체크아웃 `%TEMP%\GOODWAY_ACCESSIBILITY_FINAL_VERIFY_20261116`은 더티/비추적 파일이 있으니 `git clean/reset/rebase/checkout`으로 파괴 금지.
+
+### B. 이번 기준점 LAST_GOOD: 검증된 사실만
+
+1. 기존 DRYWRITE 공개글/글쓰기 코드는 UI·키보드 지원 보강 및 이전 `prefers-reduced-motion` 수정과 함께 `npm.cmd run verify` 실제 Exit0: archive 4 + Keep privacy 5 + storyboard 7 + globalVoice/A11Y 8 = **24/24 PASS**, ESLint PASS, TypeScript PASS, Vite 42 modules PASS, `git diff --check` PASS. 기존 소스의 재검사 실적이며 전체 보조공학 사용자 합격 증거는 아님.
+2. 실제 Chrome localhost HTTPS 가상 공개모사 기사에서 12px 날짜 색상 `text-gray-500`/zinc-900 대비 **3.66:1**(WCAG 일반 글씨 AA 4.5:1 미달) → `HomeView.tsx` 날짜 단 한곳 `text-gray-400`/zinc-900 보정 → 실제 계산 CSS 대비 **6.98:1**, 별도 격리 Chrome 프로필에서 **13/13 PASS 두 번**. 원본 클라이언트 원고/글 발행/백엔드 POST0; 테스트는 Synthetic LIST fixture일 뿐 진짜 승인 글 아님.
+3. 기존 접근성 보정 소스 GitHub `styles.css` `265f5003269e8c641b438678ff2b605cc76fa7d2`, `HomeView.tsx` `d183758cadc05ca22ad0c87c47e8e6c3a36df3d2`, 기존 테스트 `global-voice-contract.test.mjs` 최종 `b98594a424f549fde8e2d512f5ea59cade27f535` 모두 기존 **PR #19**에만 커밋, 각 파일 해시 WRITE→READBACK PASS, `main` 병합 0.
+4. Vercel 실제 조회 Preview `dpl_EgEQ3EmP21BrAvKitvjCasnBoJvW`, URL `https://drywrite-preview-repair-baseline-q6srp7s6v.vercel.app`, state **READY**, `target=null`, 배포 커밋 `7793a4a9b8b71c9c28736007427a2ca309327046`(수정 소스 포함). **이것은 Production 아닌 Preview**.
+5. 사용자의 일반 Windows Chrome에서 위 최신 Preview가 실제 렌더되고, 주소·타이틀/검색 라벨/메뉴 Enter/닫기 포커스/Esc 복귀/스킵 링크 UIA 탐색 **5/5 PASS**, 영수증 `goodway_latest_preview_chrome_uia_receipt.json` SHA256 `272AB46A101B047E40A196EABFD3DD30D80F5F975BDEF06F7D2305D3D598A472`.
+6. 같은 실제 Preview Chrome에 단축키로 5단계 확대하여 검색창 높이 **163→326px(2.0배)**, 메뉴와 검색 가로 경계·Enter·Esc 확인 및 5단계 원상복구 163px까지 **6/6 PASS**, 영수증 `goodway_latest_preview_zoom_200_receipt.json` SHA256 `FA351E25C036FDC5C3CA2AAA3C7696BCB2A9F9A17154F8DACC0F1EDAF069B1A6`. 완전한 WCAG 200% 적합성 / 전 페이지 접근성 인증은 아님.
+7. Chrome 157 브라우저 지원 메타는 `navigator.language=ko-KR`, 한국어 로컬 음성 1개, 다른 19개는 외부 가능, `ko→en/ja/es/zh-Hans/zh-Hant/fr/de/pt/vi/th` 모두 모델 상태 **downloadable**로만 실측. 실제 모델 다운로드/번역 성공/다국어 TTS 오디오/사용자 청취 PASS **아님**.
+8. 앞선 원격 UIA의 숨김 스킵 링크 강제 포커스 1건은 FAIL/HOLD(도구 한계, 제품 오류 확정 아님). 별도 로컬 Chrome에서 실제 첫 Tab→링크·Enter→`#main-content` 및 main 포커스 전환 **12/12 PASS**. 실 Preview에서 숨김 링크의 완전한 실기기 Tab 순서·NVDA/Narrator 음성 낭독은 남아 있음.
+9. 노트북 Windows ADB 실행 경로 및 Android SDK `ANDROID_HOME`이 없고 실제 연결된 Android 테스트폰은 확인 못함. 삼성 노트북 PnP 구성품/외부 가전은 스마트폰 테스트 접속 증거 아님. 즉 Android Chrome / TalkBack / Voice Access 직접 검수 **HOLD**.
+10. Google Docs 중앙 운영헌장·통합 히스토리·Dry Writer 전자책·AI 앱개발 전자책에 A14 세부 영수증 및 최신 Preview READY 추가, 해당 각 문서 시작/종료 마커 `READBACK 4/4 PASS` 확인. 다른 프로젝트의 concurrent append를 보존하는 `requiredRevisionId` 기반 append-only 사용.
+
+### C. 다음 채팅 즉시 처리할 FIRST_UNFINISHED — 아래 순서, 실제 권한/증거 기준
+
+**P0 — 정본·중복 보호:** 구글 연결 계정 확인 → 위 GitHub 인계문/중앙헌장·히스토리·두 전자책/23행·61 계약 실제 READBACK → GitHub 현재 PR#19 HEAD·보호본 파일 SHA 및 Vercel Preview 배포 SHA 대응 확인. 완료된 테스트/기존 PACK/NODE/Trigger/PR/프로젝트 중복 생성 금지. 원본/로컬 보호 checkout 파괴 금지.
+
+**P1 — 실제 최신 Preview 접근성:** 승인된 사용자 Chrome 세션으로 기존 Preview만 열어, 인증 우회·Share URL 생성 없이 공개글 카드 날짜 텍스트의 실제 CSS 계산색·12px·부모 배경·대비(>=4.5) 정확 선택자 계측. **검증 전 실 Preview 색 대비 PASS 오인 금지**. 이어 320px/390px/화면 확대 200%의 각 페이지(홈·공개글) reflow, 가로 스크롤, Ctrl+Tab/Enter/Esc, focus visibility, status live region, 가능하면 Windows Narrator·NVDA 실제 청취를 순차 검증. 부재인 기기는 HOLD, 억지 자동 설치 금지.
+
+**P2 — Android 실제 기기:** 사용자의 Android 휴대폰이 원격 PC 또는 지원 브라우저/앱을 통해 권한 있게 접근 가능한지 먼저 확인; ADB/USB/원격 연결 없으면 성공으로 오인하지 말고 사용자 실기기 조작용 짧은 QA 체크리스트 및 빈 영수증 양식을 원문 없이 제시. Chrome 모바일 번역, TalkBack 읽기 순서, Voice Access 조작, 320/390px 화면·클릭 표적·권한 동의 마이크 OFF를 시험; 장치가 없으면 `HOLD_ANDROID_PHYSICAL_DEVICE_UNAVAILABLE`.
+
+**P3 — 다국어·로컬 TTS:** 사용자 승인된 실제 공개기사 `PUBLIC_CONTENT_ID + sourceRevision` 존재·권리·공개 범위 검증 후에만 국가별 브라우저 Chrome 페이지 번역/기기내 Translator API/음성 `SpeechSynthesis` 각각 분리해 품질 측정. 기존 `downloadable`는 다운로드 완료 아님. 사용자 기기/언어별 실제 모델 설치 여부·비용·개인정보·동의 확인. 원문을 원격 번역·외부 WebSpeech·시온 Gemini 서비스로 동의 없이 전송 금지. **임의 모든 언어/국가 지원·번역 품질 보장 주장 금지**.
+
+**P4 — 기존 시온·V-tube 음성 JSON/MCP 브릿지:** 기존 `services/globalVoiceContract.mjs`(`GOODWAY_GLOBAL_VOICE_JSON_MCP_V1_20261116`)와 VTube `services/videoTemplateAutomationService.ts`, 기존 `apps-script/VTubeVideoTemplateBridge_20260826.gs` 재검토. 기존 VTUBE GAS는 `dialogue` 원문을 시트로 전송하고 ScriptApp 트리거 생성 경로가 있어 GOODWAY **metadata-only** 브릿지로 직결 금지. 시온 음성 사용권/배우 동의·합법 체크포인트·비용·에페메랄 인증 및 민감 정보 미송신이 확인되지 않으면 `SION_LOCAL_VOICE` / `GEMINI_LIVE` / `MCP_ADAPTER` = HOLD, provider 실제 ACK x2 없으면 렌더 PASS 금지. 미승인 마이크/영구 녹음·음성 복제 금지.
+
+**P5 — 승인/기록/인계:** 바른관계(사랑·화목·격려·붙듦·오래참음·선행·기쁨·기도·감사·분별) 및 본섬김, 인격 존중, 이용자 접근성·개인정보·권리 QA Gate 유지. 창조자 정확 원고/음색/매체/공개 범위 승인 전 `AUTO_PUBLISH=false`, `VOICE_RENDER_HOLD`, `PRODUCTION_HOLD`, `PR #19 DRAFT`. 실검수 영수증+SHA/실행코드+LAST_GOOD/FIRST_UNFINISHED를 **같은 GitHub 인계문과 중앙헌장/통합히스토리/전자책 2종에 append-only**하고 문서별 독립 READBACK, 충돌 시 최신 revision 재조회 후 중복 여부 확인.
+
+### D. 다음 창에 붙여 넣을 시작 지시문(초안)
+
+```text
+굳웨이 라이트 × 본섬김 글로벌 접근성·Chrome 번역·시온 음성팩의 기존 작업을 DUAL_EYE_MULTI_BRAIN_BRIDGE_V1 및 GOODWHY_SION_RIGHT_RELATIONSHIP_PURPOSE_V1_20261116 계보에서 LAST_GOOD부터 실제 이어서 진행해.
+
+운영 계정 homedesigntaedi@gmail.com / 노트북 BOOK-1HE2THGKRA / GitHub 8friend8ship-cloud/DRYWRITE / 브랜치 fix/goodway-write-archive-pagination-20261116 / 기존 PR #19 DRAFT. 기존 단일 GitHub 정식 인계문 https://github.com/8friend8ship-cloud/DRYWRITE/blob/fix/goodway-write-archive-pagination-20261116/docs/GOODWAY_GLOBAL_A11Y_NEXT_CHAT_EXECUTION_HANDOFF_20261116.md 의 최신 A15 NEXT_CHAT_HANDOFF 섹션을 먼저 실제 READBACK하고, 중앙 운영헌장·중앙 히스토리·Dry Writer 전자책·AI 앱개발 전자책 및 WRITER 23행·함수계약 61을 확인한 뒤 GitHub 최신 HEAD/소스 SHA/Vercel 배포 SHA를 검증해.
+
+LAST_GOOD: 기존 24/24 테스트+lint/typecheck/build, 격리 Chrome 카드날짜 대비 3.66→6.98:1 보정·13/13 두 회, 최신 수정본 Vercel Preview READY와 실제 Windows Chrome UIA5/5·실제 2배 확대6/6 및 설정 원복. 미완료는 실제 Preview 날짜색 직접 계측, 실제 화면낭독기·Android TalkBack/Voice Access, 실번역/실청취, 시온 음색 권리 및 실제 MCP Provider ACK x2야. 임의 PASS 금지.
+
+우선 P0 기존 정본 READBACK 및 중복/원본 보호 → P1 기존 최신 Preview 실색상·반응형·키보드·스크린리더 → P2 Android 실기기 접근 가능 여부/실검수(기기 부재면 HOLD) → P3 공개 승인글·국가별 Chrome 번역·기기 음성 실제 QA → P4 시온/VTube 기존 metadata-only 음성 계약/적법성·ACK → P5 중앙기록/두 전자책 및 GitHub 동일 인계문에 실제 증빙만 append+READBACK 순으로 진행해.
+
+새 팩/노드/물리 트리거·유료 AI 생성·무단 공개글 발행·미승인 원고/Keep·마이크/음원 전송/기존 VTube GAS 원문 큐 직결 금지. PR #19 DRAFT, Production·자동발행·시온 음성 렌더 HOLD를 유지하고 실제 완료분/미완료분을 분리해서 보고해.
+```
+
+[END GOODWAY_GLOBAL_A11Y_A15_NEXT_CHAT_HANDOFF_20261116]
