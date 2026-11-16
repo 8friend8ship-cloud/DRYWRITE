@@ -1,5 +1,5 @@
 {
-  "name": "E-Book Studio AI",
-  "description": "An AI-powered tool to automatically format text from Google Docs into a beautifully designed e-book. It intelligently generates a title and a unique cover image based on your content.",
+  "name": "굳웨이 라이트 (GOODWAY WRITE)",
+  "description": "GOODWHY 바른관계 5원칙, 본섬김·하몬서클을 따르는 글·전자책 열람 프런트엔드. 기존 DRYWRITE 데이터 경로·글 식별자는 유지한다.",
   "requestFramePermissions": []
 }
