@@ -104,3 +104,17 @@ test('GET_CONTENT sends only the requested contentId, not a list cursor', async 
     globalThis.fetch = originalFetch;
   }
 });
+
+// GOODWAY_EMPTY_PUBLIC_ARCHIVE_STATUS — source-level regression guard; not live browser QA.
+test('empty public archive distinguishes loading, approved-zero, and search miss without disclosing drafts', async () => {
+  const { readFileSync } = await import('node:fs');
+  const app = readFileSync(new URL('../App.tsx', import.meta.url), 'utf8');
+  const home = readFileSync(new URL('../components/HomeView.tsx', import.meta.url), 'utf8');
+  assert.match(app, /initialLoading, setInitialLoading/);
+  assert.match(app, /\.finally\(\(\) =>/);
+  assert.match(home, /dataSource === 'server' && loadedCount === 0/);
+  assert.match(home, /아직 공개 승인된 글이 없습니다/);
+  assert.match(home, /내부 검수 중인 원고/);
+  assert.match(home, /loadedCount > 0 && articles\.length === 0/);
+  assert.doesNotMatch(home, /Data: \{dataSource\.toUpperCase\(\)\}/);
+});
