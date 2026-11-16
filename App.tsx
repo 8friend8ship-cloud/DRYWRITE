@@ -26,6 +26,7 @@ const readContentIdFromLocation = () => {
 const App = () => {
   const [view, setView] = useState<View>('home');
   const [records, setRecords] = useState<ContentRecord[]>([]);
+  const [initialLoading, setInitialLoading] = useState(true);
   const [dataState, setDataState] = useState<Pick<ContentListResult, 'source' | 'integrationStatus'>>({
     source: 'sample',
     integrationStatus: 'WAITING_BACKEND_CONTRACT',
@@ -50,6 +51,8 @@ const App = () => {
       setNextPageToken(result.nextPageToken ?? null);
     }).catch(() => {
       if (active) setLoadError('글 목록을 불러오지 못했습니다. 잠시 후 다시 시도해 주세요.');
+    }).finally(() => {
+      if (active) setInitialLoading(false);
     });
     return () => { active = false; };
   }, []);
@@ -179,6 +182,7 @@ const App = () => {
         />
       ) : (
         <HomeView
+          initialLoading={initialLoading}
           articles={filteredArticles}
           searchQuery={searchQuery}
           setSearchQuery={setSearchQuery}
