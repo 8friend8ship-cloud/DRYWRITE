@@ -129,3 +129,30 @@ BOOK-1HE2THGKRA: Chrome `157.0.8103.51`, Python `3.14.3`. `scripts/open_goodway_
 **현재 LAST_GOOD:** 23/23+lint/typecheck/build + Chrome 합성 UI 10/10 x2 + 기존 Chrome 기기 지원 메타 10개 언어쌍 downloadable + GitHub PR 문서/소스 READBACK. **다음 FIRST_UNFINISHED:** 권한 있는 Preview Chrome 실제 UI의 320/390/200% Zoom·Tab/Esc·screen reader → Android Chrome/TalkBack/Voice Access 실기기 → 실제 승인 공개 article revision·현지화 품질 → 기존 시온/VTUBE 보이스 권리/서버 ACK x2 → 창조자 승인 후에만 병합·배포 검토.
 
 [END GOODWAY_A11Y_CHROME_LOCAL_E2E_REDUCED_MOTION_PATCH_20261116]
+
+
+## 8. [GOODWAY_REAL_PREVIEW_CHROME_UIA_A13_20261116] — Windows 실제 인증 Preview 키보드 검수
+
+**2026-11-16 15:17 KST** · 기존 계보 `DUAL_EYE_MULTI_BRAIN_BRIDGE_V1` · 원본보호/중복팩 금지. 계정 `homedesigntaedi@gmail.com`, 장비 `BOOK-1HE2THGKRA`, 기존 PR#19 `DRAFT, OPEN, NOT_MERGED` 확인.
+
+**중요한 최초 장애 해소:** Windows 일반 Chrome의 실제 주소창을 UI Automation으로 조회하니 기존 보호 Preview `drywrite-preview-repair-baseline-hyrnuc2sa.vercel.app`에서 굳웨이 라이트 앱 제목을 실제 표시. 최신 검증 코드 `139e60eac4784a22e188995a7e2884feab7e6c81`의 Vercel 별도 Preview 배포 `dpl_7K22zxfEf21wCARwXaRYVD7BQwGv`는 Vercel에서 `READY` 확인. 기존 Chrome 세션에서 최신 주소 `https://drywrite-preview-repair-baseline-n6zr52gos.vercel.app`로 접근하니 앱 UI 제목과 주소 확인. Vercel SSO 차단이 **이 Windows Chrome 세션의 최신 Preview UI 검수 범위에서는 해소**됐으며 외부 공개용 share-link 생성, SSO 우회, 암호·쿠키 조회, 사용자 Chrome 프로필 복제는 하지 않음.
+
+**실제 user-session Chrome UIA 5/5 PASS** (Chrome Windows UI Automation):
+1) Preview URL+앱 제목 동일 확인
+2) 공개 글 검색 레이블/메뉴 버튼 실제 존재
+3) 실제 Enter 키로 메뉴 열고 패널 닫기 버튼으로 포커스 이동
+4) Esc 키로 닫은 뒤 원래 메뉴 버튼으로 포커스 복귀
+5) 본문 건너뛰기/검색 등 기본 탐색 레이블 접근성 트리 노출.
+**영수증:** `%TEMP%\GOODWAY_A11Y_DEVICE_RECEIPTS_20261116\goodway_real_preview_chrome_uia_receipt.json`, SHA256 `B8D67993626A48C3B3E6411E36CBEADAB9DE5E54CD6AEAAF3D7BED1940E69575`.
+
+**실제 user-session Chrome 추가 5 PASS + 1 제한/HOLD**: 가상 검색어 입력→원복, 스킵 링크 UIA 트리 노출, 메뉴 Shift+Tab/Tab 포커스 순환 및 Esc Cleanup 성공. 숨김 스킵 링크의 UIA 강제 `set_focus`는 실제 키보드 Tab 입력을 대신하지 못해 검증값 FAIL 1로 저장, **제품 결함 단정 금지**. 주소창에서 F6/Tab로 접근하려던 독립 UIA 시도도 스킵을 못 찾아 `HOLD`로 기록 (실기기 키보드 내비게이션 경로 추가 검수 필요). 영수증 `goodway_real_preview_keyboard_extended_receipt.json` SHA256 `4084B336508F7389E516D5BB2D7970514BFE08A704296A1461153752A9799FD3`; `goodway_real_preview_skip_keynav_receipt.json` SHA256 `37E86322246E4296252C11BF4C810D38D13325B8269863BCEAC00C9256689B50`.
+
+**동일 코드, 격리 Chrome 157 HTTPS 로컬 fixture 실제 키보드 이벤트 재검증 12/12 PASS**: 첫 Tab은 `<a href="#main-content">`에 포커스, Enter 후 URL fragment `#main-content`, `document.activeElement.id=main-content`, `tabindex=-1` 확인. 이전 홈/검색/메뉴/Esc/글 제목/동작 줄이기/320·390·768px·AX 트리도 PASS. `goodway_local_skip_keyboard_receipt.json` SHA256 `758C7962FB2705BEC482D5C8B1E8EBA9E5AA10079616195CC318E114D7113D24`. 합성 임시 공개모사 글이므로 실제 승인된 기사·실서비스 시온 오디오가 아님. 로컬 가상 API `LIST_CONTENT` 1회, GET 0/POST 0. 임시 self-signed localhost 인증서는 격리 Chrome 프로필에만 적용, 운영 인증서 변경 없음.
+
+**안전/제한:** 사용자 원문·Keep·고객자료 외부 전송 0, 미승인 원고 저장·발행 0, Gemini/시온 유료 호출 0, 앱 마이크 시작 0, 새 물리 트리거/팩/노드 0. Windows Chrome UIA는 NVDA·Narrator 실제 낭독과 다르고, Android Chrome/TalkBack/Voice Access 실제 휴대폰 검증은 아직 없음. 현재 real Preview 200% Zoom/터치 reflow, 실제 승인 PUBLIC_CONTENT_ID+revision/브라우저 Chrome 메뉴 번역 실행·음성 청취, 시온 실제 라이선스/Backend MCP Provider ACK x2는 모두 HOLD.
+
+**LAST_GOOD:** 이전 PR#19 코드 23/23 + ESLint/tsc/build + 로컬 Chrome10/10 x2 + 이 턴 실제 authenticated Preview UIA5/5 + 실제 UIA 추가5/6(1 검사도구 제한) + 로컬 키보드 스킵12/12 + Vercel code SHA READY.
+
+**FIRST_UNFINISHED:** ① Chrome real Preview에서 실제 200% 확대·키보드 스킵/스크린리더(NVDA/Narrator) UX 및 승인기사 E2E, ② Android Chrome 번역/TalkBack/Voice Access 실제 기기, ③ 국가·언어별 실번역/실청취/의미·발음 QA, ④ 시온 음색·V-tube 권리, 서버 최소메타 승인·Provider ACK x2, ⑤ 본섬김/바른관계/개인정보와 글별 창조자 최종 승인. 그 전 PR#19 DRAFT/병합·운영 배포/자동글 발행/자동 음성생성 HOLD.
+
+[END GOODWAY_REAL_PREVIEW_CHROME_UIA_A13_20261116]
