@@ -159,8 +159,16 @@ const App = () => {
 
   return (
     <>
+      <a href="#main-content" className="sr-only focus:not-sr-only focus:fixed focus:left-3 focus:top-2 focus:z-50 focus:rounded focus:bg-white focus:p-3 focus:text-black">
+        본문으로 건너뛰기
+      </a>
       {view === 'article' && selectedArticle ? (
         <ArticleView
+          key={selectedArticle.id}
+          articleId={selectedArticle.id}
+          revision={selectedArticle.source.updatedAt || selectedArticle.source.createdAt}
+          sourceLanguage={selectedArticle.source.language || 'ko-KR'}
+          publicServerSource={dataState.source === 'server' && dataState.integrationStatus === 'CONNECTED'}
           title={selectedArticle.title}
           coverImageUrl={selectedArticle.coverImageUrl}
           content={selectedArticle.content}
