@@ -9,8 +9,9 @@
     "build": "vite build",
     "typecheck": "tsc --noEmit",
     "lint": "eslint .",
-    "verify": "npm run lint && npm run typecheck && npm run build",
-    "preview": "vite preview"
+    "verify": "npm run lint && npm run typecheck && npm run brand:check && npm run build",
+    "preview": "vite preview",
+    "brand:check": "node scripts/test-goodway-brand.mjs"
   },
   "dependencies": {
     "react": "^19.2.4",
