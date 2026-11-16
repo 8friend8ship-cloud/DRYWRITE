@@ -19,7 +19,7 @@ interface HomeViewProps {
 
 const Header: React.FC<{ onMenuClick: () => void }> = ({ onMenuClick }) => (
     <header className="p-4 bg-black flex justify-between items-center">
-        <h1 className="text-white text-2xl font-bold tracking-tighter font-serif">DryWriter</h1>
+        <h1 className="text-white text-2xl font-bold tracking-tighter font-serif">굳웨이 라이트</h1>
          <div className="flex items-center space-x-4">
             <button onClick={onMenuClick} aria-label="전체 글 메뉴 열기" className="rounded p-2 hover:bg-zinc-800 focus:outline-none focus:ring-2 focus:ring-white">
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-white" fill="none" viewBox="0 0 24" stroke="currentColor">
@@ -54,8 +54,13 @@ export const HomeView: React.FC<HomeViewProps> = ({ articles, onSelectArticle, s
                     )}
                 </div>
                 <div className="relative mb-8">
-                    <input 
-                        type="text"
+                    <label htmlFor="goodway-search" className="mb-2 block text-sm font-semibold text-white">
+                      공개 글 검색
+                    </label>
+                    <input
+                        id="goodway-search"
+                        type="search"
+                        aria-describedby="goodway-search-scope"
                         placeholder="불러온 글에서 검색하세요."
                         value={searchQuery}
                         onChange={(e) => setSearchQuery(e.target.value)}
@@ -74,7 +79,7 @@ export const HomeView: React.FC<HomeViewProps> = ({ articles, onSelectArticle, s
                     ))}
                 </div>
                 {articles.length === 0 && <p className="py-16 text-center text-zinc-400">검색 결과가 없습니다.</p>}
-                <div className="mt-10 text-center text-sm text-zinc-400" aria-live="polite">
+                <div id="goodway-search-scope" className="mt-10 text-center text-sm text-zinc-400" aria-live="polite">
                     현재 불러온 글 {loadedCount}건에서 검색합니다.
                     {hasMore && ' 전체 승인 글을 탐색하려면 더 불러오기를 누르세요.'}
                 </div>
