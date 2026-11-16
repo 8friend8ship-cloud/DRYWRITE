@@ -43,6 +43,7 @@ export const GlobalAccessibilityControls = ({
   const [voices, setVoices] = useState<SpeechSynthesisVoice[]>([]);
   const [voiceURI, setVoiceURI] = useState('');
   const [rate, setRate] = useState(1);
+  const [allowRemoteVoice, setAllowRemoteVoice] = useState(false);
   const [micActive, setMicActive] = useState(false);
   const [chromeInstructions, setChromeInstructions] = useState(false);
   const runId = useRef(0);
@@ -84,8 +85,10 @@ export const GlobalAccessibilityControls = ({
   }, []);
   useEffect(() => setVoiceURI(''), [language]);
 
-  const matchingVoices = useMemo(() => voices.filter(voice => sameSpeechLanguage(voice.lang, language)),
-    [voices, language]);
+  const matchingVoices = useMemo(() => voices.filter(voice =>
+    sameSpeechLanguage(voice.lang, language) &&
+    (voice.localService || (allowRemoteVoice && publicServerSource))),
+    [voices, language, allowRemoteVoice, publicServerSource]);
   const speak = useCallback(() => {
     if (!('speechSynthesis' in window) || !('SpeechSynthesisUtterance' in window)) {
       setStatus('읽어주기를 지원하지 않는 기기입니다. 화면낭독기를 이용해 주세요.');
@@ -283,13 +286,21 @@ export const GlobalAccessibilityControls = ({
       </div>}
       <div className="mt-5 border-t border-zinc-700 pt-4">
         <h3 className="text-lg font-semibold">글 듣기</h3>
-        <p className="mt-1 text-sm text-zinc-400">현재 언어: {language} · 설치된 언어 음성: {matchingVoices.length}개</p>
+        <p className="mt-1 text-sm text-zinc-400">현재 언어: {language} · 허용된 음성: {matchingVoices.length}개</p>
+        <label className="mt-2 flex items-center gap-2 text-sm text-zinc-300">
+          <input type="checkbox" checked={allowRemoteVoice}
+            onChange={e => setAllowRemoteVoice(e.target.checked)}
+            disabled={!publicServerSource} />
+          외부 처리가 가능한 브라우저 음성도 허용 (승인된 공개 글에만, 명시적 동의)
+        </label>
         <div className="mt-3 flex flex-wrap items-end gap-3">
           <label className="flex flex-col gap-1 text-sm">기기 음성
             <select value={voiceURI} onChange={e => setVoiceURI(e.target.value)}
               className="max-w-64 rounded border border-zinc-600 bg-black p-3 text-white">
               <option value="">현재 언어 기본 음성</option>
-              {matchingVoices.map(voice => <option value={voice.voiceURI} key={voice.voiceURI}>{voice.name}</option>)}
+              {matchingVoices.map(voice => <option value={voice.voiceURI} key={voice.voiceURI}>
+                {voice.name} {voice.localService ? '(기기 내)' : '(외부 처리 가능)'}
+              </option>)}
             </select>
           </label>
           <label className="flex flex-col gap-1 text-sm">속도 {rate.toFixed(1)}배
