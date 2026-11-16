@@ -50,9 +50,14 @@ export async function translatePublicArticleOnDevice(input: {
     throw new Error('TRANSLATION_LIMIT_REVIEW');
   const browser = getBrowserTranslator();
   if (!browser) throw new Error('CHROME_TRANSLATOR_UNAVAILABLE');
+  const forTranslationModel = (lang: string) => {
+    if (lang.toLowerCase() === 'zh-tw' || lang.toLowerCase() === 'zh-hant') return 'zh-Hant';
+    if (lang.toLowerCase() === 'zh-cn' || lang.toLowerCase() === 'zh-hans') return 'zh-Hans';
+    return lang.split('-')[0];
+  };
   const options = {
-    sourceLanguage: sourceLanguage.split('-')[0],
-    targetLanguage: targetLanguage.split('-')[0],
+    sourceLanguage: forTranslationModel(sourceLanguage),
+    targetLanguage: forTranslationModel(targetLanguage),
   };
   const availability = await browser.availability(options);
   if (availability === 'unavailable') throw new Error('LANGUAGE_PAIR_UNAVAILABLE');
