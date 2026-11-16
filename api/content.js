@@ -17,6 +17,11 @@ export default async function handler(req, res) {
   upstreamUrl.searchParams.set('action', action);
   if (action === 'LIST_CONTENT') {
     upstreamUrl.searchParams.set('pageSize', String(req.query?.pageSize || '100'));
+    // Forward only the bounded opaque cursor; keep upstream public approval filtering.
+    const pageToken = req.query?.pageToken;
+    if (typeof pageToken === 'string' && pageToken.length > 0 && pageToken.length <= 4096) {
+      upstreamUrl.searchParams.set('pageToken', pageToken);
+    }
   }
   if (action === 'GET_CONTENT') {
     upstreamUrl.searchParams.set('contentId', String(req.query?.contentId || ''));
